@@ -54,3 +54,5 @@ Thumbs.db
 # Build directories
 /frontend/dist/
 /frontend/build/
+
+sensitive.txt
