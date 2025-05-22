@@ -1,0 +1,161 @@
+/* Subtle animations for UI elements */
+
+/* Subtle shimmer effect for text gradients */
+@keyframes subtle-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Gentle pulse for focused elements */
+@keyframes gentle-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(156, 90, 255, 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(156, 90, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(156, 90, 255, 0);
+  }
+}
+
+/* Shine animation for hover effects */
+@keyframes shine {
+  0% {
+    left: -100%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.2;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+/* Soft fade-in animation */
+@keyframes soft-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Elegant slide-up animation */
+@keyframes elegant-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Floating animation for elements */
+@keyframes elegant-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Soft breathing animation for backgrounds */
+@keyframes soft-breathe {
+  0%,
+  100% {
+    background-size: 100% 100%;
+  }
+  50% {
+    background-size: 105% 105%;
+  }
+}
+
+/* Subtle scale animation */
+@keyframes subtle-scale {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* Animation utility classes */
+.animate-shimmer {
+  background-size: 200% 200%;
+  animation: subtle-shimmer 8s infinite linear;
+}
+
+.animate-pulse {
+  animation: gentle-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.animate-fade-in {
+  animation: soft-fade-in 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: elegant-slide-up 0.7s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.animate-float {
+  animation: elegant-float 6s ease-in-out infinite;
+}
+
+.animate-breathe {
+  animation: soft-breathe 8s ease-in-out infinite;
+}
+
+.animate-scale {
+  animation: subtle-scale 5s ease-in-out infinite;
+}
+
+/* Animation delays */
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* Animation durations */
+.duration-slow {
+  animation-duration: 1.5s;
+}
+
+.duration-slower {
+  animation-duration: 2s;
+}
+
+.duration-fast {
+  animation-duration: 0.5s;
+}
+
+.duration-faster {
+  animation-duration: 0.3s;
+}

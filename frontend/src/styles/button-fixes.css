@@ -1,0 +1,23 @@
+/* Button alignment styles for all screen sizes */
+.button-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Ensure buttons have proper width on small screens */
+@media (max-width: 640px) {
+  .glass-button {
+    min-width: 110px;
+    max-width: 160px;
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* Ensure buttons stay side by side even on very small screens */
+  .button-container {
+    justify-content: center;
+  }
+}

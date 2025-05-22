@@ -1,0 +1,195 @@
+/* Performance optimizations for smoother UI experiences */
+
+/* Optimize transitions with hardware acceleration */
+.hardware-accelerated {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Contain properties to optimize repaints */
+.contain-repaints {
+  contain: layout paint style;
+}
+
+/* Optimize transitions */
+.optimize-transitions {
+  will-change: transform, opacity;
+}
+
+/* Optimize scrolling */
+.optimize-scrolling {
+  will-change: scroll-position;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Preload animations */
+.preload-animations {
+  will-change: transform, opacity, filter;
+}
+
+/* Preload opacity transitions specifically */
+.preload-opacity {
+  will-change: opacity;
+}
+
+/* Reduce repaints during animations */
+.reduce-repaints {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  contain: paint;
+}
+
+/* Helper class for fast modal appearances */
+.fast-modal {
+  will-change: transform, opacity;
+  transition-duration: 0.25s !important;
+}
+
+/* Enhanced scrolling with fading edges */
+.optimize-scrolling-with-fade {
+  will-change: scroll-position;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 10px,
+    black calc(100% - 10px),
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 10px,
+    black calc(100% - 10px),
+    transparent
+  );
+}
+
+/* Virtualized content container for efficient rendering */
+.virtualized-container {
+  position: relative;
+  transform: translateZ(0);
+  will-change: transform;
+  contain: strict;
+}
+
+/* Virtual item styling in virtualized lists */
+.virtual-item {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  contain: content;
+}
+
+/* Layer promotion with low-impact properties for containing elements */
+.promote-layer {
+  transform: translate3d(0, 0, 0);
+  z-index: 1;
+  isolation: isolate;
+}
+
+/* Super-optimized rendering for elements that need to appear immediately */
+.instant-render {
+  transform: translateZ(0);
+  transition-duration: 0s !important;
+  animation-duration: 0s !important;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  contain: layout paint style;
+  pointer-events: none; /* Temporarily disable interactions for fastest initial render */
+}
+.instant-render.ready {
+  pointer-events: auto; /* Re-enable interactions once rendered */
+}
+
+/* Placeholder styling for content that's loading */
+.content-placeholder {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: placeholder-pulse 1.5s infinite;
+  border-radius: 4px;
+  contain: strict;
+}
+
+/* Animation for content placeholders */
+@keyframes placeholder-pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Optimized staggered animation container */
+.stagger-container {
+  contain: layout style;
+}
+
+/* Elements that will animate in a staggered fashion */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+  will-change: opacity, transform;
+}
+
+/* Animation states for staggered items */
+.stagger-container.ready .stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Apply staggered delays to child elements */
+.stagger-container.ready .stagger-item:nth-child(1) {
+  transition-delay: 0ms;
+}
+.stagger-container.ready .stagger-item:nth-child(2) {
+  transition-delay: 30ms;
+}
+.stagger-container.ready .stagger-item:nth-child(3) {
+  transition-delay: 60ms;
+}
+.stagger-container.ready .stagger-item:nth-child(4) {
+  transition-delay: 90ms;
+}
+.stagger-container.ready .stagger-item:nth-child(5) {
+  transition-delay: 120ms;
+}
+.stagger-container.ready .stagger-item:nth-child(n + 6) {
+  transition-delay: 150ms;
+}
+
+/* Scroll snap container for improved touch scrolling */
+.scroll-snap-container {
+  scroll-snap-type: y proximity;
+  overflow-y: auto;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Items that should snap during scrolling */
+.scroll-snap-item {
+  scroll-snap-align: start;
+}
+
+/* Off-screen content preparation (for animations) */
+.prepare-offscreen {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}

@@ -1,0 +1,43 @@
+/* Grid fixes and additional styles */
+.grid-card {
+  display: block; /* Override any flex behavior */
+  height: 100%;
+}
+
+/* How it works cards style */
+.how-it-works-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  padding: 2.5rem 2rem;
+  transition: all 0.3s ease;
+  background: rgba(50, 50, 50, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(80, 80, 80, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.how-it-works-card .how-it-works-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.how-it-works-card:hover {
+  transform: translateY(-5px);
+  background: rgba(60, 60, 60, 0.12);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Fix for grid layout issues */
+@media (min-width: 768px) {
+  .md-grid-fix {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}

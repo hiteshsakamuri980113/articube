@@ -1,0 +1,40 @@
+/* Heart icon styling - more subtle gradient with eye-friendly glow */
+.heart-icon {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    rgba(156, 90, 255, 0.85),
+    rgba(90, 158, 255, 0.85)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  margin: 0 3px;
+  transition: filter 0.4s ease;
+}
+
+.heart-icon:hover {
+  filter: drop-shadow(0 0 3px rgba(156, 90, 255, 0.5));
+}
+
+/* Simplified footer styling */
+.glass-footer {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: transparent; /* Changed to transparent to blend with the page */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Remove the top border/gradient effect */
+
+/* Footer text styling */
+.glass-footer p {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.glass-footer p:hover {
+  opacity: 1;
+}

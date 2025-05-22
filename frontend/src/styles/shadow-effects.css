@@ -1,0 +1,9 @@
+/* Shadow glow effects - even more subtle and elegant */
+.shadow-glow {
+  box-shadow: 0 0 6px rgba(156, 90, 255, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+
+li:hover .shadow-glow {
+  box-shadow: 0 0 8px rgba(156, 90, 255, 0.15);
+}

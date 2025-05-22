@@ -1,0 +1,322 @@
+/* Common styles for public-facing pages with glassmorphism design */
+
+/* Main content container with spacing from fixed navbar */
+.main-content {
+  padding-top: 80px; /* Adjust based on navbar height */
+  min-height: calc(100vh - 70px); /* Adjust to account for footer */
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Auth form container with fixed width for better UI */
+.auth-form-container {
+  width: 420px; /* Industry standard form width - provides optimal readability and usability */
+  max-width: 100%; /* Ensures responsiveness on smaller screens */
+  margin: 0 auto;
+  box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+  /* Enhanced container styles for better visual appeal */
+  position: relative;
+  z-index: 1; /* Ensure it appears above background elements */
+  transition: all 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+/* Optional hover effect for auth forms - subtle elevation on hover */
+.auth-form-container:hover .glass-card {
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Page section styles */
+.page-section {
+  margin-bottom: 3rem;
+}
+
+/* Deep space background animation for floating orbs */
+@keyframes subtle-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.01);
+  }
+}
+
+/* Navigation container styles */
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  z-index: 50;
+  width: 100%;
+}
+
+/* ArtiCube logo styles */
+.app-logo {
+  background: linear-gradient(to right, #9c5aff, #5a9eff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  letter-spacing: -0.03em;
+}
+
+/* Modern, simplified form styles for login/register */
+.auth-form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+  width: 100%; /* Ensure form group takes full width of its container */
+  box-sizing: border-box; /* Include padding and border in the element's width */
+}
+
+/* Add spacing to the first form group for better separation
+form > .auth-form-group:first-of-type {
+  margin-top: 0.5rem;
+} */
+
+.support-button {
+  margin-bottom: 0.75rem;
+}
+
+.auth-form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: medium;
+  color: rgba(226, 230, 255, 0.8);
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  width: 100%; /* Ensure label matches parent width */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Special styles for flex container with "Forgot password?" link */
+.auth-form-group .flex {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth-form-group .flex .auth-form-label {
+  flex: 1;
+  min-width: 0; /* Allows the label to shrink if needed */
+}
+
+.auth-form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(230, 236, 255, 0.15);
+  border-radius: 0.75rem;
+  color: white;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.auth-form-input:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(230, 236, 255, 0.25);
+}
+
+.auth-form-input:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(156, 90, 255, 0.3);
+  box-shadow: 0 0 10px rgba(156, 90, 255, 0.12);
+  outline: none;
+  /* Removed transform effect for more subtle appearance */
+}
+
+/* Error styles */
+.error-container {
+  background: rgba(255, 70, 70, 0.07);
+  border: 1px solid rgba(255, 70, 70, 0.2);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Link styles */
+.auth-link {
+  color: rgba(156, 90, 255, 1);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+}
+
+.auth-link:hover {
+  color: rgba(156, 90, 255, 0.8);
+}
+
+.auth-link::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: rgba(156, 90, 255, 0.8);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.auth-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Form validation styles */
+.form-error {
+  color: rgba(255, 100, 100, 1);
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  width: 100%; /* Ensure error messages respect container width */
+  box-sizing: border-box; /* Include padding in width calculation */
+  overflow-wrap: break-word; /* Ensure long error messages wrap properly */
+}
+
+/* Modernized glass button */
+.glass-auth-button {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(156, 90, 255, 0.8) 0%,
+    rgba(156, 90, 255, 0.7) 100%
+  );
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(156, 90, 255, 0.25);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.glass-auth-button:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(156, 90, 255, 0.9) 0%,
+    rgba(156, 90, 255, 0.8) 100%
+  );
+  box-shadow: 0 6px 20px rgba(156, 90, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.glass-auth-button:disabled {
+  opacity: 0.7;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* Remember me checkbox */
+.remember-me-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.remember-me-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 0.5rem;
+}
+
+.remember-me-checkbox:checked {
+  background: rgba(156, 90, 255, 0.8);
+  border-color: rgba(156, 90, 255, 0.5);
+}
+
+.remember-me-checkbox:checked::before {
+  content: "✓";
+  position: absolute;
+  color: white;
+  font-size: 0.75rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.remember-me-label {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Using the form-error definition from earlier in the file */
+
+.form-error-icon {
+  margin-right: 0.25rem;
+  flex-shrink: 0;
+}
+
+.back-to-landing {
+  margin-top: 1.5rem;
+}
+
+/* Loading dot animation for buttons - more subtle */
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.animate-pulse {
+  animation: pulse-dot 2s infinite;
+}
+
+/* Auth form header styles - adds subtle separation */
+.glass-card > div:first-of-type {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+/* Create a subtle gradient line below the header */
+.glass-card > div:first-of-type:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(156, 90, 255, 0.2),
+    rgba(90, 158, 255, 0.15),
+    rgba(156, 90, 255, 0.05)
+  );
+  transform: translateY(1px);
+}
+
+/* Account toggle text styling */
+.text-sm .siri-text-subtle {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
