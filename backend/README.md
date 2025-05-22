@@ -2,6 +2,20 @@
 
 ArtiCube is a knowledge retrieval system that uses advanced AI agents to search for accurate information and provide well-formatted responses with proper citations.
 
+## Environment Setup
+
+1. Create a `.env` file in the backend directory based on the provided `.env.example`
+2. Set up your API keys and configuration values in the `.env` file
+3. Never commit your actual API keys to the repository
+
+```bash
+# Copy the example env file
+cp .env.example .env
+
+# Edit with your actual settings
+nano .env  # or use your preferred editor
+```
+
 ## Issue Resolution
 
 The system had several issues that have been fixed:

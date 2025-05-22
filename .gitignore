@@ -40,6 +40,7 @@ var/
 .env.development
 .env.test
 .env.production
+backend/.env
 
 # OS generated files
 .DS_Store
