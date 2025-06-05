@@ -3,12 +3,12 @@ import React from "react";
 interface ButtonProps {
   children: React.ReactNode;
   type?: "button" | "submit" | "reset";
-  variant?: "primary" | "secondary" | "outline";
+  variant?: "primary" | "secondary" | "outline" | "danger";
   color?: "primary" | "secondary" | "success" | "danger" | "warning" | "info";
   size?: "sm" | "md" | "lg";
   fullWidth?: boolean;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
 }
 
@@ -44,6 +44,7 @@ const Button: React.FC<ButtonProps> = ({
       "bg-[var(--surface-secondary)] text-[var(--text-primary)] border border-[var(--border)] hover:bg-[var(--surface-tertiary)]",
     outline:
       "bg-transparent border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent-light)] hover:text-[var(--accent-secondary)]",
+    danger: "bg-red-600 text-white shadow-sm hover:bg-red-700 hover:shadow",
   };
 
   // Disabled style

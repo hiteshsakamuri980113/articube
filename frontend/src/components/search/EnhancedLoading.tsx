@@ -113,7 +113,7 @@ const EnhancedLoading: React.FC<EnhancedLoadingProps> = ({
       </div>
 
       <div className="loading-text">
-        <span className="text-gradient animate-shimmer">{message}</span>
+        <span className="text-gradient">{message}</span>
         <span className="loading-dots">
           <span className="dot"></span>
           <span className="dot"></span>

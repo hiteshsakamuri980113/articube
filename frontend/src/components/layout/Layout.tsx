@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import FloatingMenu from "./FloatingMenu";
 import { useAppSelector } from "../../hooks/reduxHooks";
+import AppFooter from "../common/AppFooter";
 
 /**
  * Main layout component containing the fixed header menu and content area
@@ -24,6 +25,8 @@ const Layout = () => {
           <div className="glass glass-card p-4 md:p-6 min-h-[calc(100vh-7rem)] overflow-auto rounded-2xl shadow-lg">
             <Outlet />
           </div>
+          {/* Footer at the bottom of the content area */}
+          <AppFooter />
         </main>
       </div>
     </div>

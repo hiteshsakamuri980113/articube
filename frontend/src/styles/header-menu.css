@@ -11,17 +11,22 @@
 
 /* Menu button */
 .header-button {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.3s ease;
-  /* Subtle styling */
-  background: rgba(40, 40, 40, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  /* Direct glassmorphism styling */
+  background: linear-gradient(
+    135deg,
+    rgba(156, 90, 255, 0.25) 0%,
+    rgba(90, 158, 255, 0.25) 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,34 +37,67 @@
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
   position: relative;
-}
-
-/* Inner content of the button */
-.header-button-inner {
-  font-size: 17px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  background-color: rgba(60, 60, 60, 0.3);
-  position: relative;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
   letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* Subtle hover effect */
+/* Subtle shimmer effect */
+.header-button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  transform: rotate(-45deg);
+  animation: shimmer 3s infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.header-button:hover::before {
+  opacity: 1;
+}
+
+/* Elegant hover effect */
 .header-button:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  background: rgba(50, 50, 50, 0.12);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(
+    135deg,
+    rgba(156, 90, 255, 0.4) 0%,
+    rgba(90, 158, 255, 0.4) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.25);
+  color: white;
+}
+
+.header-button:active {
+  transform: translateY(0) scale(1.02);
+  transition: all 0.15s ease;
 }
 
 .header-button.open {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
-  background: rgba(50, 50, 50, 0.15);
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25), 0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  background: linear-gradient(
+    135deg,
+    rgba(156, 90, 255, 0.35) 0%,
+    rgba(90, 158, 255, 0.35) 100%
+  );
+  border-color: rgba(156, 90, 255, 0.3);
+  color: white;
 }
 
 /* Header menu styling */
@@ -146,6 +184,15 @@
   }
 }
 
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(-45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(-45deg);
+  }
+}
+
 /* Media queries for responsive design */
 @media (max-width: 768px) {
   .header-menu {
@@ -160,14 +207,9 @@
 
 @media (max-width: 480px) {
   .header-button {
-    width: 45px;
-    height: 45px;
-  }
-
-  .header-button-inner {
-    width: 35px;
-    height: 35px;
-    font-size: 18px;
+    width: 44px;
+    height: 44px;
+    font-size: 17px;
   }
 
   .header-container {

@@ -48,13 +48,13 @@ def extract_json_from_text(text: str) -> Optional[Union[Dict, List]]:
 
 def format_sources_list(sources_data: Any) -> List[Dict[str, str]]:
     """
-    Format sources data into a standardized list of sources
+    Format sources data into a standardized list of sources with four essential fields.
     
     Args:
         sources_data: Source data in various possible formats
         
     Returns:
-        List of source dictionaries with standardized fields
+        List of source dictionaries with four essential fields: title, source, link, year
     """
     formatted_sources = []
     
@@ -64,9 +64,9 @@ def format_sources_list(sources_data: Any) -> List[Dict[str, str]]:
             if isinstance(item, dict):
                 source = {
                     "title": item.get("title", "No title"),
+                    "source": item.get("source", item.get("author", "Unknown Source")),
                     "link": item.get("link", ""),
-                    "snippet": item.get("snippet", item.get("description", "No description")),
-                    "citation": item.get("citation", f"{item.get('title', 'Source')}. {item.get('link', '')}")
+                    "year": item.get("year", "2025")
                 }
                 formatted_sources.append(source)
     
@@ -83,18 +83,18 @@ def format_sources_list(sources_data: Any) -> List[Dict[str, str]]:
             # If no JSON found, create a generic source from the text
             formatted_sources.append({
                 "title": "Information Source",
+                "source": "Knowledge Base",
                 "link": "",
-                "snippet": sources_data[:300] if len(sources_data) > 300 else sources_data,
-                "citation": "Generated content"
+                "year": "2025"
             })
     
     # If we couldn't extract proper sources, return a default source
     if not formatted_sources:
         formatted_sources.append({
             "title": "Information Source",
+            "source": "Knowledge Base",
             "link": "",
-            "snippet": "No specific sources were extracted",
-            "citation": "Generated content without specific references"
+            "year": "2025"
         })
     
     return formatted_sources

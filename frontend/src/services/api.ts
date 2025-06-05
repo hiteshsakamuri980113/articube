@@ -90,4 +90,15 @@ api.interceptors.response.use(
   }
 );
 
+// API function to fetch user's search history
+export const fetchSearchHistory = async (limit = 4) => {
+  try {
+    const response = await api.get(`/agent/history?limit=${limit}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching search history:", error);
+    return [];
+  }
+};
+
 export default api;

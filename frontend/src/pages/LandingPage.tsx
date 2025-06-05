@@ -8,6 +8,9 @@ import "../styles/section-spacing.css";
 import "../styles/deep-space-bg.css";
 import "../styles/footer-styles.css";
 import "../styles/shadow-effects.css";
+import "../styles/tech-stack-responsive.css";
+import "../styles/footer-styles.css";
+import AppFooter from "../components/common/AppFooter";
 
 // Icon Components
 const AIIcon = () => (
@@ -57,23 +60,6 @@ const CodeIcon = () => (
       strokeLinejoin="round"
       strokeWidth={1.5}
       d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-    />
-  </svg>
-);
-
-const ArchitectureIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-6 w-6"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={1.5}
-      d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3"
     />
   </svg>
 );
@@ -206,12 +192,12 @@ const LandingPage = () => {
             <div className="flex flex-col items-center text-center">
               <div className="max-w-3xl mx-auto">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight siri-heading text-gradient">
-                  Full-Stack AI Knowledge Assistant
+                  Personalized AI Knowledge Assistant
                 </h1>
                 <p className="text-lg siri-text-subtle mb-8 leading-relaxed">
                   An AI-powered knowledge assistant built with React,
-                  TypeScript, and Python. Features include semantic search, user
-                  authentication, and an interactive UI.
+                  TypeScript, and Python. Powered to fetch true and accurate
+                  information on your query from the most trusted sources.
                 </p>
                 <div className="flex flex-row justify-center gap-4 flex-wrap">
                   <Link
@@ -235,72 +221,6 @@ const LandingPage = () => {
 
           <div className="section-divider"></div>
 
-          {/* Architecture Section - NEW */}
-          <section className="mb-32 mt-16">
-            <h2 className="text-2xl font-bold mb-12 siri-heading section-title animated-gradient-text">
-              System Architecture
-            </h2>
-            <div className="glass glass-card p-6 rounded-2xl">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="architecture-item glass-shine">
-                  <h3 className="text-lg font-semibold siri-heading mb-3 flex items-center text-gradient">
-                    <span className="icon-container mr-2">
-                      <CodeIcon />
-                    </span>
-                    Frontend
-                  </h3>
-                  <p className="siri-text-subtle text-sm mb-3">
-                    React with TypeScript providing type safety and improved
-                    developer experience.
-                  </p>
-                  <ul className="siri-text-subtle text-sm space-y-1">
-                    <li>Redux Toolkit for state management</li>
-                    <li>TailwindCSS for UI components</li>
-                    <li>Custom modal system with accessibility</li>
-                  </ul>
-                </div>
-
-                <div className="architecture-item glass-shine">
-                  <h3 className="text-lg font-semibold siri-heading mb-3 flex items-center text-gradient">
-                    <span className="icon-container mr-2">
-                      <ArchitectureIcon />
-                    </span>
-                    Backend
-                  </h3>
-                  <p className="siri-text-subtle text-sm mb-3">
-                    FastAPI Python framework with asyncio for high-performance
-                    API endpoints.
-                  </p>
-                  <ul className="siri-text-subtle text-sm space-y-1">
-                    <li>MongoDB for document storage</li>
-                    <li>JWT authentication system</li>
-                    <li>RESTful API design</li>
-                  </ul>
-                </div>
-
-                <div className="architecture-item glass-shine">
-                  <h3 className="text-lg font-semibold siri-heading mb-3 flex items-center text-gradient">
-                    <span className="icon-container mr-2">
-                      <AIIcon />
-                    </span>
-                    AI Integration
-                  </h3>
-                  <p className="siri-text-subtle text-sm mb-3">
-                    Custom AI agent with knowledge retrieval capabilities and
-                    semantic search.
-                  </p>
-                  <ul className="siri-text-subtle text-sm space-y-1">
-                    <li>Vector database for information retrieval</li>
-                    <li>Content processor for text chunking</li>
-                    <li>Source attribution and citation tracking</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <div className="section-divider"></div>
-
           {/* Technical Features Section */}
           <section className="mb-32 mt-20">
             <h2 className="text-2xl font-bold mb-12 siri-heading section-title animated-gradient-text">
@@ -317,9 +237,9 @@ const LandingPage = () => {
                   AI Agent Integration
                 </h3>
                 <p className="siri-text-subtle text-sm leading-relaxed">
-                  Custom knowledge retrieval agent with semantic search
-                  capabilities for accurate information extraction and source
-                  attribution.
+                  Google ADK-powered Gemini agent with sequential architecture
+                  for accurate information retrieval and source attribution
+                  tracking.
                 </p>
               </div>
 
@@ -347,8 +267,9 @@ const LandingPage = () => {
                   Interactive Search
                 </h3>
                 <p className="siri-text-subtle text-sm leading-relaxed">
-                  Real-time search with modal interface, keyboard navigation,
-                  and persistent search history using MongoDB.
+                  Performance-optimized search with glass UI modal, keyboard
+                  navigation, and MongoDB-backed search history with source
+                  attribution.
                 </p>
               </div>
             </div>
@@ -359,134 +280,130 @@ const LandingPage = () => {
           {/* Tech Stack Section */}
           <section className="mb-32 mt-20">
             <div className="glass glass-card p-8 rounded-2xl">
-              <h2 className="text-2xl font-bold mb-10 siri-heading section-title animated-gradient-text">
+              <h2 className="text-2xl font-bold mb-10 siri-heading section-title animated-gradient-text w-fit">
                 Tech Stack
               </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="tech-stack-item glass-shine">
+              <div className="tech-stack-container">
+                <div className="tech-stack-item">
                   <h3 className="text-base font-semibold siri-heading mb-3 text-gradient">
                     Frontend
                   </h3>
                   <ul className="siri-text-subtle text-sm space-y-2">
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      React 18
+                    <li>
+                      <span className="dot"></span>
+                      React 19
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       TypeScript 5
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       Redux Toolkit
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       TailwindCSS
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       Vite
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       Jest & React Testing Library
                     </li>
                   </ul>
                 </div>
 
-                <div className="tech-stack-item glass-shine">
+                <div className="tech-stack-item">
                   <h3 className="text-base font-semibold siri-heading mb-3 text-gradient">
                     Backend
                   </h3>
                   <ul className="siri-text-subtle text-sm space-y-2">
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       FastAPI
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       Python 3.11
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       MongoDB
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       PyJWT
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       Pydantic
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       Uvicorn
                     </li>
                   </ul>
                 </div>
 
-                <div className="tech-stack-item glass-shine">
+                <div className="tech-stack-item">
                   <h3 className="text-base font-semibold siri-heading mb-3 text-gradient">
                     AI Integration
                   </h3>
                   <ul className="siri-text-subtle text-sm space-y-2">
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      Custom Vector DB
+                    <li>
+                      <span className="dot"></span>
+                      Google ADK
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      OpenAI API
+                    <li>
+                      <span className="dot"></span>
+                      Gemini
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      Text Embeddings
+                    <li>
+                      <span className="dot"></span>
+                      Sequential Agent Architecture
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      Semantic Search
+                    <li>
+                      <span className="dot"></span>
+                      Google Search Integration
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      Knowledge Extraction
+                    <li>
+                      <span className="dot"></span>
+                      Source Attribution
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      Citation Tracking
+                    <li>
+                      <span className="dot"></span>
+                      In-Memory Session Service
                     </li>
                   </ul>
                 </div>
 
-                <div className="tech-stack-item glass-shine">
+                <div className="tech-stack-item">
                   <h3 className="text-base font-semibold siri-heading mb-3 text-gradient">
                     DevOps
                   </h3>
                   <ul className="siri-text-subtle text-sm space-y-2">
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      Docker
+                    <li>
+                      <span className="dot"></span>
+                      Environment Configuration
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      GitHub Actions
+                    <li>
+                      <span className="dot"></span>
+                      Cross-Origin Resource Sharing
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      AWS Deployment
+                    <li>
+                      <span className="dot"></span>
+                      GitHub Repository
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      CI/CD Pipeline
+                    <li>
+                      <span className="dot"></span>
+                      Vite Dev Server
                     </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
-                      Unit & Integration Tests
-                    </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow"></span>
+                    <li>
+                      <span className="dot"></span>
                       Environment Variables
                     </li>
                   </ul>
@@ -510,23 +427,22 @@ const LandingPage = () => {
                     UI Features
                   </h3>
                   <ul className="siri-text-subtle text-sm space-y-3">
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow mt-1.5"></span>
-                      <span>Modal-based search with keyboard navigation</span>
+                    <li>
+                      <span className="dot"></span>
+                      Performance-optimized search modal with hardware
+                      acceleration
                     </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow mt-1.5"></span>
-                      <span>
-                        Custom design system with consistent UI elements
-                      </span>
+                    <li>
+                      <span className="dot"></span>
+                      Glassmorphism design system with fluid animations
                     </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow mt-1.5"></span>
-                      <span>Responsive design with mobile-first approach</span>
+                    <li>
+                      <span className="dot"></span>
+                      Virtualized scrolling with scroll snap for touch devices
                     </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow mt-1.5"></span>
-                      <span>Smooth transitions for better user experience</span>
+                    <li>
+                      <span className="dot"></span>
+                      Advanced performance monitoring and optimizations
                     </li>
                   </ul>
                 </div>
@@ -536,72 +452,29 @@ const LandingPage = () => {
                     Backend Features
                   </h3>
                   <ul className="siri-text-subtle text-sm space-y-3">
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow mt-1.5"></span>
-                      <span>JWT authentication with token refresh</span>
+                    <li>
+                      <span className="dot"></span>
+                      Async FastAPI with MongoDB for scalable data storage
                     </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow mt-1.5"></span>
-                      <span>
-                        Optimized API communication with request debouncing
-                      </span>
+                    <li>
+                      <span className="dot"></span>
+                      Sequential LLM agent architecture with Google ADK
                     </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow mt-1.5"></span>
-                      <span>
-                        Error boundary implementation with fallback UI
-                      </span>
+                    <li>
+                      <span className="dot"></span>
+                      Robust error handling with session state recovery
                     </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 mr-2.5 shadow-glow mt-1.5"></span>
-                      <span>Test coverage for frontend and backend</span>
+                    <li>
+                      <span className="dot"></span>
+                      JWT authentication with secure user management
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
           </section>
-
-          <div className="section-divider"></div>
-
-          {/* Demo CTA */}
-          <section className="mb-32 mt-20 text-center">
-            <div className="glass glass-card glass-shine p-10 rounded-2xl max-w-2xl mx-auto">
-              <h2 className="text-2xl font-bold mb-4 siri-heading animated-gradient-text">
-                Explore the Application
-              </h2>
-              <p className="text-md siri-text-subtle mb-8 leading-relaxed">
-                A full-stack application with AI, React, and TypeScript.
-              </p>
-              <div className="flex justify-center gap-5 flex-wrap">
-                <Link
-                  to="/login"
-                  className="glass-button glass-button-primary rounded-lg text-sm flex items-center justify-center gap-2"
-                >
-                  Try the Demo
-                </Link>
-                <a
-                  href="https://github.com/hiteshsakamuri/articube"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="glass-button rounded-lg text-sm flex items-center justify-center gap-2"
-                >
-                  View Code
-                </a>
-              </div>
-            </div>
-          </section>
         </div>
-
-        {/* Simple Footer - seamlessly integrated */}
-        <footer className="glass-footer py-8 mt-12">
-          <div className="app-container">
-            <p className="text-center text-sm siri-text-subtle">
-              © {new Date().getFullYear()} Made with{" "}
-              <span className="heart-icon">❤️</span> by Hitesh
-            </p>
-          </div>
-        </footer>
+        <AppFooter />
       </main>
     </div>
   );

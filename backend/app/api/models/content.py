@@ -101,3 +101,35 @@ class ReadingHistory(BaseModel):
         arbitrary_types_allowed=True,
         json_encoders={ObjectId: str}
     )
+
+class SavedSearchResult(BaseModel):
+    """
+    Model for saved search results
+    """
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    user_id: PyObjectId
+    title: str
+    snippet: str
+    content: str
+    sources: List[Dict[str, Any]] = Field(default_factory=list)
+    saved_at: datetime = Field(default_factory=datetime.utcnow)
+    
+    model_config = ConfigDict(
+        populate_by_name=True,
+        arbitrary_types_allowed=True,
+        json_encoders={ObjectId: str}
+    )
+
+class SaveSearchResultRequest(BaseModel):
+    """
+    Request model for saving search results
+    """
+    title: str
+    snippet: str
+    content: str
+    sources: List[Dict[str, Any]] = Field(default_factory=list)
+    
+    model_config = ConfigDict(
+        populate_by_name=True,
+        arbitrary_types_allowed=True
+    )

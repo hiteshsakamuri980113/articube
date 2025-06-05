@@ -489,10 +489,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                 className="search-button primary"
               >
                 {isLoading ? (
-                  <span className="flex items-center gap-2">
-                    <span className="loading-dot" />
-                    Searching...
-                  </span>
+                  <span className="flex items-center gap-2">Searching...</span>
                 ) : (
                   <span>Search</span>
                 )}
@@ -529,7 +526,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                   <h3>Search for Knowledge</h3>
                   <p>
                     Ask any question or search for a topic to access factual
-                    information from ArtiCube's knowledge base
+                    information through ArtiCube's agent.
                   </p>
                 </div>
               )}
@@ -552,6 +549,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                           source: {
                             title: string;
                             link: string;
+                            source: string;
                           },
                           index: number
                         ) => (
@@ -563,7 +561,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                               className="source-title-minimal"
                             >
                               <span className="source-dot"></span>
-                              {source.title}
+                              {source.source} | {source.title}
                             </a>
                           </div>
                         )
@@ -577,9 +575,6 @@ const SearchModal: React.FC<SearchModalProps> = ({
                   className="history-floating-button"
                   onClick={() => setHistoryExpanded(!historyExpanded)}
                 >
-                  <span className="history-button-icon">
-                    {historyExpanded ? "✕" : "🕒"}
-                  </span>
                   {!historyExpanded && (
                     <span className="history-button-text">History</span>
                   )}

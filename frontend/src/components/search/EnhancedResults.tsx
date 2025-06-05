@@ -1,4 +1,7 @@
 import React, { useEffect, useRef } from "react";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { useNotification } from "../../hooks/useNotification";
+import { saveContent } from "../../store/slices/SavedContentSlice";
 import { applyStaggeredAnimation } from "../../utils/performanceUtils";
 import "../../styles/search-modal.css";
 import "../../styles/performance-optimizations.css";
@@ -22,6 +25,20 @@ interface EnhancedResultsProps {
  */
 const EnhancedResults: React.FC<EnhancedResultsProps> = ({ result }) => {
   const resultContentRef = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
+  const { showSuccess, showError } = useNotification();
+
+  const handleSaveResult = async () => {
+    try {
+      await dispatch(saveContent(result)).unwrap();
+      showSuccess("Search result saved successfully!", "Saved");
+    } catch (error) {
+      showError(
+        (error as string) || "Failed to save search result",
+        "Save Error"
+      );
+    }
+  };
 
   // Apply optimizations and animations when the result content changes
   useEffect(() => {
@@ -90,6 +107,13 @@ const EnhancedResults: React.FC<EnhancedResultsProps> = ({ result }) => {
     <div className="search-result-container hardware-accelerated">
       <div className="search-result-header">
         <h3>Results</h3>
+        <button
+          onClick={handleSaveResult}
+          className="save-result-button"
+          title="Save this search result"
+        >
+          Save
+        </button>
       </div>
 
       <div

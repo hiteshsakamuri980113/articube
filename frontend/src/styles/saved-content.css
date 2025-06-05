@@ -1,0 +1,485 @@
+/* Netflix-inspired styles for the SavedPage component */
+
+/* Fade-in animation for content */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.saved-content-group {
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.saved-content-group h2 {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  padding-left: 0.5rem;
+}
+
+/* Section header styles for date display */
+.section-date-header {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  padding-left: 0.5rem;
+  border-left: 2px solid rgba(156, 90, 255, 0.3);
+}
+
+/* Netflix-style content row with fixed 4-column grid */
+.content-row {
+  display: grid;
+  grid-template-columns: repeat(
+    4,
+    minmax(0, 1fr)
+  ); /* Exactly 4 items per row */
+  gap: 1rem; /* Increased gap to prevent overlap */
+  padding: 0.5rem 0;
+  width: 100%;
+  overflow-x: hidden; /* Hide overflow */
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.4s ease; /* Netflix-style easing */
+  will-change: transform, opacity; /* Performance optimization */
+}
+
+.content-row.page-changing {
+  opacity: 0.2; /* More noticeable transition */
+  transform: scale(0.98); /* Subtle scale effect */
+}
+
+/* Animation for row entrance */
+@keyframes rowEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content-row-container {
+  overflow-x: hidden; /* Hide scrollbar but allow JS scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  padding: 0 0.5rem;
+  scroll-behavior: smooth;
+  border-radius: 8px;
+  position: relative;
+  width: 100%;
+  animation: rowEntrance 0.6s ease-out; /* Netflix-style entrance */
+}
+
+/* Hide scrollbars */
+.content-row-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Netflix-style card with minimal design */
+.content-card {
+  background: rgba(30, 30, 35, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 0.75rem; /* Smaller padding */
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Netflix-style easing */
+  height: 160px; /* Smaller height for Netflix-style cards */
+  width: 95%; /* Reduced width to prevent overlap */
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 0 auto; /* Center the card */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  will-change: transform, box-shadow; /* Performance optimization */
+}
+
+/* Card hover state with subtle scaling that doesn't overlap */
+.content-card:hover {
+  transform: translateY(-5px) scale(1.04); /* Add slight uplift for depth */
+  z-index: 2;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4); /* Enhanced shadow for depth */
+  border: 1px solid rgba(156, 90, 255, 0.25);
+  background: rgba(35, 35, 40, 0.5); /* Slightly brighter background on hover */
+}
+
+/* Card actions with equal but smaller width buttons */
+.card-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15, 15, 20, 0.95) 30%,
+    rgba(15, 15, 20, 0.6) 70%,
+    rgba(15, 15, 20, 0) 100%
+  );
+  padding: 2rem 1rem 0.75rem; /* Increased top padding for smoother gradient */
+  opacity: 0;
+  transform: translateY(10px); /* Greater initial offset */
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Netflix-style easing */
+  display: flex;
+  justify-content: center; /* Center buttons */
+  align-items: center;
+  gap: 0.8rem; /* Gap between buttons */
+  z-index: 5;
+}
+
+.content-card:hover .card-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Equal width buttons with appropriate size */
+.card-actions button {
+  min-width: 80px !important; /* Fixed width for buttons */
+  max-width: 110px !important;
+  border-radius: 8px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-width: 2px !important; /* Thicker borders */
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Remove button style */
+.card-actions button:first-child {
+  background-color: rgba(40, 40, 45, 0.8);
+  border: 2px solid rgba(156, 90, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-actions button:first-child:hover {
+  background-color: rgba(60, 60, 65, 0.9);
+  border-color: rgba(156, 90, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Open button style */
+.card-actions button:last-child {
+  background-color: rgba(156, 90, 255, 0.8);
+  border: 2px solid rgba(156, 90, 255, 0.4);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-actions button:last-child:hover {
+  background-color: rgba(176, 110, 255, 0.9);
+  border-color: rgba(186, 130, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(156, 90, 255, 0.4);
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Enhanced scroll buttons - Netflix style */
+.scroll-button-right,
+.scroll-button-left {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 60px; /* Increased width for better clickability */
+  z-index: 10;
+  transition: all 0.3s ease;
+  opacity: 0.4; /* Start with lower opacity */
+}
+
+.scroll-button-right:hover,
+.scroll-button-left:hover {
+  opacity: 1; /* Full opacity on hover */
+}
+
+.scroll-button-right {
+  right: 0;
+  background: linear-gradient(
+    to right,
+    rgba(10, 10, 15, 0),
+    rgba(20, 20, 30, 0.9) /* Stronger gradient */
+  );
+}
+
+.scroll-button-left {
+  left: 0;
+  background: linear-gradient(
+    to left,
+    rgba(10, 10, 15, 0),
+    rgba(20, 20, 30, 0.9) /* Stronger gradient */
+  );
+}
+
+.scroll-button-icon {
+  background: rgba(156, 90, 255, 0.6); /* Brighter background */
+  border-radius: 50%;
+  width: 40px; /* Larger button */
+  height: 40px; /* Larger button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+  border: 1px solid rgba(156, 90, 255, 0.5); /* More visible border */
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.scroll-button-icon:hover {
+  transform: scale(1.1); /* Scale up on hover */
+  background: rgba(156, 90, 255, 0.8); /* Brighter on hover */
+}
+
+/* Disabled scroll buttons */
+.scroll-button-left.disabled,
+.scroll-button-right.disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.scroll-button-left.disabled:hover,
+.scroll-button-right.disabled:hover {
+  opacity: 0.2;
+}
+
+.scroll-button-left.disabled .scroll-button-icon,
+.scroll-button-right.disabled .scroll-button-icon {
+  background: rgba(80, 80, 90, 0.3);
+  box-shadow: none;
+  border-color: rgba(80, 80, 90, 0.2);
+}
+
+.scroll-button-left.disabled .scroll-button-icon:hover,
+.scroll-button-right.disabled .scroll-button-icon:hover {
+  transform: none;
+  background: rgba(80, 80, 90, 0.3);
+}
+
+/* Pagination indicators - Netflix style */
+.page-indicator {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px; /* Slightly more spacing between dots */
+  padding: 4px 10px; /* Medium padding */
+  background: rgba(20, 20, 25, 0.4); /* Subtle background */
+  border-radius: 12px; /* Medium radius */
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(156, 90, 255, 0.1);
+  z-index: 5;
+  transition: opacity 0.3s ease;
+  align-items: center;
+}
+
+.indicator-dot {
+  width: 8px; /* Medium-sized dots */
+  height: 8px; /* Medium-sized dots */
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25); /* Subtle inactive dots */
+  transition: all 0.3s ease;
+  cursor: pointer;
+  transform: scale(1);
+}
+
+.indicator-dot:hover {
+  background: rgba(156, 90, 255, 0.5);
+  transform: scale(1.2);
+}
+
+.indicator-dot.active {
+  background: rgba(156, 90, 255, 0.8); /* Brighter active dot */
+  transform: scale(1.3); /* Medium scaling */
+  box-shadow: 0 0 8px rgba(156, 90, 255, 0.4); /* Medium glow effect */
+}
+
+/* Page counter */
+.page-counter {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: 4px;
+  font-weight: 500;
+  background: rgba(156, 90, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(156, 90, 255, 0.2);
+}
+
+/* Enhanced Netflix-style loading skeletons */
+.skeleton-card {
+  cursor: default;
+  pointer-events: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.05) 20%,
+    rgba(255, 255, 255, 0.1) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-header {
+  height: 18px;
+  width: 180px;
+  background: linear-gradient(
+    90deg,
+    rgba(156, 90, 255, 0.1) 0%,
+    rgba(156, 90, 255, 0.15) 50%,
+    rgba(156, 90, 255, 0.1) 100%
+  );
+  border-radius: 4px;
+  margin-left: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-title {
+  height: 18px;
+  width: 85%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-line {
+  height: 12px;
+  width: 95%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Staggered animation timing for more natural loading */
+.skeleton-title {
+  animation-delay: 0.1s;
+}
+.skeleton-line:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.skeleton-line:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+/* Skeleton action buttons */
+.skeleton-actions {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 15px;
+}
+
+.skeleton-button {
+  height: 30px;
+  width: 45%;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(40, 40, 50, 0.4) 0%,
+    rgba(60, 60, 70, 0.5) 50%,
+    rgba(40, 40, 50, 0.4) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+/* Improved header style with animated gradient */
+.animated-gradient-text {
+  background: linear-gradient(
+    45deg,
+    rgba(156, 90, 255, 1),
+    rgba(90, 158, 255, 0.9),
+    rgba(156, 90, 255, 0.8),
+    rgba(90, 158, 255, 1)
+  );
+  background-size: 200% 200%;
+  animation: subtle-shimmer 8s ease-in-out infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+/* Add the missing keyframe animation for subtle-shimmer */
+@keyframes subtle-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

@@ -294,7 +294,7 @@ form > .auth-form-group:first-of-type {
 .glass-card > div:first-of-type {
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
   position: relative;
 }
 
@@ -306,12 +306,12 @@ form > .auth-form-group:first-of-type {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to right,
     rgba(156, 90, 255, 0.2),
     rgba(90, 158, 255, 0.15),
     rgba(156, 90, 255, 0.05)
-  );
+  ); */
   transform: translateY(1px);
 }
 

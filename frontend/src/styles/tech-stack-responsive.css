@@ -1,0 +1,184 @@
+/* Tech Stack responsive styling */
+
+/* No transitions or animations for tech stack elements */
+
+/* Default (mobile) - separate cards for each tech stack */
+.tech-stack-item {
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: rgba(40, 40, 40, 0.2);
+  height: 100%;
+  border: 1px solid rgba(80, 80, 80, 0.1);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.tech-stack-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Proper heading styling without hover effects */
+.tech-stack-item h3 {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+  width: auto;
+  max-width: fit-content;
+  white-space: nowrap;
+  padding-bottom: 0.5rem;
+}
+
+/* Add a subtle underline to the heading */
+.tech-stack-item h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(156, 90, 255, 0.5);
+}
+
+/* Subtle list styling */
+.tech-stack-item ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tech-stack-item ul li {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.35rem 0;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+  /* Ensure no animations or transitions */
+  animation: none !important;
+  opacity: 1 !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* Override all animations for tech stack items */
+.tech-stack-item li {
+  animation: none !important;
+  opacity: 1 !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+.tech-stack-item ul li span.dot {
+  display: inline-block;
+  min-width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-top: 0.5rem;
+  background: rgba(156, 90, 255, 0.7);
+  /* Explicitly disable any animations or transitions */
+  animation: none !important;
+  transition: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Medium devices (sm: 640px and above) - 2x2 grid layout */
+@media (min-width: 640px) {
+  .tech-stack-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .tech-stack-item {
+    margin: 0;
+    position: relative;
+  }
+
+  /* Ensure heading alignment is consistent in 2x2 layout */
+  .tech-stack-item h3 {
+    margin-bottom: 1.25rem;
+    text-align: left;
+  }
+
+  /* Static borders between items in the grid */
+  .tech-stack-item:nth-child(odd)::after {
+    content: "";
+    position: absolute;
+    top: 10%;
+    right: 0;
+    height: 80%;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      rgba(80, 80, 80, 0),
+      rgba(80, 80, 80, 0.2),
+      rgba(80, 80, 80, 0)
+    );
+    opacity: 0.6;
+  }
+
+  .tech-stack-item:nth-child(1)::before,
+  .tech-stack-item:nth-child(2)::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      rgba(80, 80, 80, 0),
+      rgba(80, 80, 80, 0.2),
+      rgba(80, 80, 80, 0)
+    );
+    opacity: 0.6;
+  }
+}
+
+/* Large devices (lg: 1024px and above) - 1x4 grid layout */
+@media (min-width: 1024px) {
+  .tech-stack-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .tech-stack-item {
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    position: relative;
+    padding: 1.5rem;
+  }
+
+  /* Ensure heading alignment is consistent in 1x4 layout */
+  .tech-stack-item h3 {
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+
+  /* Remove the bottom borders from 2x2 layout */
+  .tech-stack-item:nth-child(1)::before,
+  .tech-stack-item:nth-child(2)::before {
+    display: none;
+  }
+
+  /* Add static vertical borders between all items except the last */
+  .tech-stack-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 10%;
+    right: 0;
+    height: 80%;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      rgba(80, 80, 80, 0),
+      rgba(80, 80, 80, 0.2),
+      rgba(80, 80, 80, 0)
+    );
+    opacity: 0.6;
+  }
+}

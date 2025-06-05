@@ -7,14 +7,13 @@ from google.adk.runners import Runner
 from google.genai import types
 from app.utils.content_processor import process_content
 from typing import Dict, Any, List, Optional, Union
-from datetime import datetime
 
 load_dotenv()
 
 # Global state for testing and development
-APP_NAME = "app-01"
-USER_ID = "hitesh-01"
-SESSION_ID = "session-01"
+APP_NAME = "hitesh-01"
+USER_ID = "hitesh-001"
+SESSION_ID = "hitesh-0001"
 
 # Global state for testing and development
 
@@ -38,14 +37,13 @@ async def create_fresh_session():
     global _session
     try:
         # Create a fresh session with current global state
-        _session = await session_service.create_session(
+        _session = session_service.create_session(
             app_name=APP_NAME,
             user_id=USER_ID,
             session_id=SESSION_ID,
             state=dict(_global_state)  # Use a copy to avoid mutation issues
         )
         print("Fresh session created successfully")
-        print(f"freshly created session is: {_session}")
         return None
     except Exception as e:
         print(f"Error creating fresh session: {e}")
@@ -54,9 +52,7 @@ async def create_fresh_session():
 # Ensure session is created or recreated when needed
 async def get_global_session():
     """Get or recreate the global session if needed"""
-    print("get global session request received successfully!")
     session = session_service.sessions[APP_NAME][USER_ID][SESSION_ID]
-    print(f"retrieved session is: {session}")
 
     if not session:
         print("Using memory-only fallback")
@@ -115,10 +111,10 @@ async def get_state_value(key: str):
 
 async def get_fact_sources() -> Dict[str, List[Dict[str, str]]]:
     """
-    Process search results into formatted sources with enhanced four-part reference support.
+    Process search results into formatted sources
     
     This function accesses the search_results directly from the session state,
-    extracts four-part citations (Title, Source, Link, Year) and formats them as sources.
+    extracts APA citations and formats them as sources.
     
     Returns:
         Dictionary with "result" key containing formatted sources list
@@ -131,58 +127,6 @@ async def get_fact_sources() -> Dict[str, List[Dict[str, str]]]:
     
     sourceList = []
     content_text = ""
-    seen_urls = set()  # Track URLs to prevent duplicates
-    seen_titles = set()  # Track titles to prevent duplicates
-    
-    def is_duplicate_source(new_source, existing_sources):
-        """Check if a source is duplicate based on URL or title similarity."""
-        new_url = new_source.get("link", "").lower().strip()
-        new_title = new_source.get("title", "").lower().strip()
-        
-        for existing in existing_sources:
-            existing_url = existing.get("link", "").lower().strip()
-            existing_title = existing.get("title", "").lower().strip()
-            
-            # Check URL match
-            if new_url and existing_url and new_url == existing_url:
-                return True
-            
-            # Check title similarity (allowing for minor differences)
-            if new_title and existing_title and len(new_title) > 10:
-                # Simple similarity check - if 80% of words match
-                new_words = set(new_title.split())
-                existing_words = set(existing_title.split())
-                if len(new_words & existing_words) / max(len(new_words), len(existing_words)) > 0.8:
-                    return True
-        
-        return False
-    
-    def validate_source(source):
-        """Validate that a source has meaningful content and valid URL."""
-        title = source.get("title", "").strip()
-        link = source.get("link", "").strip()
-        source_name = source.get("source", "").strip()
-        
-        # Must have title and either a valid URL or source name
-        if not title:
-            return False
-        
-        # Check for placeholder/dummy content
-        placeholder_terms = ['example', 'placeholder', 'dummy', 'test', 'fake']
-        if any(term in title.lower() for term in placeholder_terms):
-            return False
-        
-        # Validate URL if present
-        if link:
-            from app.utils.content_processor import ContentProcessor
-            if not ContentProcessor._is_valid_url(link):
-                return False
-        
-        # Must have either a valid URL or a meaningful source name
-        if not link and not source_name:
-            return False
-        
-        return True
     
     try:
         # Use our ContentProcessor to extract content and sources
@@ -200,62 +144,46 @@ async def get_fact_sources() -> Dict[str, List[Dict[str, str]]]:
                 stored_content = await get_state_value("content")
                 print(f"Stored {len(stored_content)} characters of content in session state")
             
-            # Convert references to source list format with validation and deduplication
+            # Convert references to source list format
             for ref in result["references"]:
-                # Extract the four essential fields only
+                # Make sure we have valid data
                 title = ref.get("title", "") or "Referenced Source"
                 link = ref.get("link", "") 
-                source = ref.get("source", "") or "Source"
-                year = ref.get("year", "") or str(datetime.now().year)
+                citation = ref.get("citation", "") or f"{title}"
+                author = ref.get("author", "") or "Source"
                 
-                # Create snippet for display purposes
-                snippet = f"Title: {title} | Source: {source} | Published: {year}"
-                
-                new_source = {
+                sourceList.append({
                     "title": title,
-                    "source": source,
                     "link": link,
-                    "year": year
-                }
-                
-                # Validate and check for duplicates
-                if validate_source(new_source) and not is_duplicate_source(new_source, sourceList):
-                    sourceList.append(new_source)
-                    print(f"Added valid source: {title} from {source}")
-                else:
-                    print(f"Skipped invalid or duplicate source: {title}")
-            
-            print(f"sources list after validation and deduplication: {sourceList}")
+                    "snippet": f"{author} - {citation[:300]}",
+                    "citation": citation
+                })
+            print(f"sources list after everything: {sourceList}")
+
+
                 
             # If no references were extracted but we found URLs in the content, create sources from them
             if not sourceList and content_text:
                 import re
                 # Extract URLs from the content
-                urls = re.findall(r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+[/\w\.-]*/?', content_text)
+                urls = re.findall(r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+[/\w\.-]*', content_text)
                 
                 if urls:
-                    # Remove duplicates and validate URLs
-                    unique_urls = []
-                    for url in urls[:5]:  # Limit to 5 URLs
-                        if url not in seen_urls and ContentProcessor._is_valid_url(url):
-                            unique_urls.append(url)
-                            seen_urls.add(url)
-                    
-                    for i, url in enumerate(unique_urls, 1):
+                    for i, url in enumerate(urls[:3], 1):
                         domain = url.split("//")[-1].split("/")[0]
                         sourceList.append({
                             "title": f"Source {i} - {domain}",
-                            "source": domain,
                             "link": url,
-                            "year": "2025"
+                            "snippet": f"Reference extracted from content - {domain}",
+                            "citation": f"{domain}. (2025). Referenced content. Retrieved from {url}"
                         })
                 else:
                     # No references found but we have content, create a generic source
                     sourceList.append({
                         "title": "Information Source",
-                        "source": "Knowledge Base",
                         "link": "",
-                        "year": str(datetime.now().year)
+                        "snippet": "Generated content without specific references",
+                        "citation": "Generated content"
                     })
                 
         elif isinstance(search_results, dict) and "organic_results" in search_results:
@@ -268,20 +196,20 @@ async def get_fact_sources() -> Dict[str, List[Dict[str, str]]]:
                 link = result.get("link", "")
                 snippet = result.get("snippet", "")
                 
-                # Generate domain name as author
+                # Generate an APA-style citation
+                from datetime import datetime
+                year = datetime.now().year
                 domain = link.split("//")[-1].split("/")[0] if link else "Unknown Source"
                 
-                new_source = {
+                citation = f"{domain}. ({year}). {title}. Retrieved from {link}"
+                
+                sourceList.append({
                     "title": title,
-                    "source": domain,
                     "link": link,
-                    "year": "2025"
-                }
-                
-                # Validate and check for duplicates
-                if validate_source(new_source) and not is_duplicate_source(new_source, sourceList):
-                    sourceList.append(new_source)
-                
+                    "snippet": snippet,
+                    "citation": citation
+                })
+        
         elif isinstance(search_results, dict) and "finder_agent_response" in search_results:
             # Handle case where the response is wrapped
             if "result" in search_results["finder_agent_response"]:
@@ -301,9 +229,9 @@ async def get_fact_sources() -> Dict[str, List[Dict[str, str]]]:
                 content_text = existing_content
                 sourceList.append({
                     "title": "Information Source",
-                    "source": "Knowledge Base",
                     "link": "",
-                    "year": str(datetime.now().year)
+                    "snippet": "Generated content based on available information",
+                    "citation": "Generated content"
                 })
             else:
                 # Try to extract any string content to use as content
@@ -320,9 +248,9 @@ async def get_fact_sources() -> Dict[str, List[Dict[str, str]]]:
                 # Create a generic source
                 sourceList.append({
                     "title": "Information Source",
-                    "source": "Knowledge Base",
                     "link": "",
-                    "year": str(datetime.now().year)
+                    "snippet": "Generated content based on search results",
+                    "citation": "Generated content"
                 })
                 
                 await set_state_value("content", content_text)
@@ -335,9 +263,9 @@ async def get_fact_sources() -> Dict[str, List[Dict[str, str]]]:
         # Return a dummy source in case of errors
         sourceList.append({
             "title": "Error processing sources",
-            "source": "System",
             "link": "",
-            "year": str(datetime.now().year)
+            "snippet": f"An error occurred while processing the search results: {str(e)}",
+            "citation": "Error in processing"
         })
     
     # If we still have no sources, create a default source
@@ -348,12 +276,12 @@ async def get_fact_sources() -> Dict[str, List[Dict[str, str]]]:
         # Create a more informative default source
         sourceList.append({
             "title": f"Information about {topic}",
-            "source": "ArtiCube",
             "link": "",
-            "year": "2025"
+            "snippet": f"This content was generated based on general knowledge about {topic}.",
+            "citation": f"ArtiCube. (2025). Information about {topic}."
         })
     
-    print(f"Extracted {len(sourceList)} unique, validated sources")
+    print(f"Extracted {len(sourceList)} sources")
     
     # Store the sources in global state
     await set_state_value("sources", sourceList)
@@ -371,7 +299,7 @@ async def get_fact_sources() -> Dict[str, List[Dict[str, str]]]:
 
 finder_agent = LlmAgent(
     name="finder_agent",
-    model="gemini-2.0-flash-exp",
+    model="gemini-2.0-flash",
     description="Agent for fetching true, accurate and comprehensive information for a given query.",
     instruction="""
     You are an expert researcher who finds true and accurate information on any topic from the most trusted and respected sources.
@@ -381,30 +309,18 @@ finder_agent = LlmAgent(
        a) True, accurate and comprehensive information about the topic from the most trusted sources, organized into logical sections with headings.
        b) At the bottom of your response, ALWAYS include a "References" section with only real, valid references from the sources you actually used for your research.
 
-          For each source you use, format the reference with FOUR clear parts separated by pipes (|) exactly like this:
+          For each source you use, format the reference in APA format exactly like shown in the below example:
           
           References:
-          Title: Understanding Machine Learning Algorithms | Source: MIT Technology Review | Link: https://www.technologyreview.mit.edu/2023/01/15/machine-learning | Year: 2023
-          Title: Introduction to Neural Networks | Source: Stanford University | Link: https://cs.stanford.edu/people/karpathy/convnetjs/ | Year: 2024
-          Title: Deep Learning Applications in Healthcare | Source: Nature Medicine Journal | Link: https://www.nature.com/articles/s41591-023-02455-z | Year: 2023
+          Smith, J. (2023). Title of the article. Website Name. https://www.example.com
+          Johnson, A. (2022). Title of another article. Another Website. https://www.anothersite.com
     
-    CRITICAL FORMATTING REQUIREMENTS:
+    IMPORTANT FORMATTING REQUIREMENTS:
     - Your response MUST have two clear sections: the main content and the references
-    - The references section MUST start with the heading "References:" on its own line
-    - Each reference MUST follow this EXACT format: "Title: [Article Title] | Source: [Website/Author Name] | Link: [Complete URL] | Year: [Publication Year]"
-    - Each reference must be on its own line
-    - You must include 3 to 5 references in the "References" section
-    - All URLs must be real, working URLs from your search results - NEVER use placeholder, example.com, or dummy URLs
-    - All references must be from valid and trusted sources actually used in your answer
-    - Do NOT include duplicate references (same URL or very similar titles)
-    - Ensure each part (Title, Source, Link, Year) is clearly identifiable and separated by " | "
-    
-    REFERENCE VALIDATION:
-    - Title: Must be the actual title of the article/page you found
-    - Source: Must be the website name, organization, or author (e.g., "BBC News", "Harvard University", "John Smith")
-    - Link: Must be a complete, valid URL starting with http:// or https://
-    - Year: Must be the publication year (use current year if not available, format as 4-digit year)
-    - Prioritize authoritative sources (academic institutions, government sites, reputable news organizations)
+    - The references section MUST start with the heading "References:"
+    - Each reference MUST follow the above mentioned format. They must be in APA format with author/site name, year, title, and URL.
+    - You must include 3 to 5 references in the "References" section. 
+    - All the references under "References" section must be from a valid and trusted source actually used in your answer. Do NOT include any dummy, placeholder, or fabricated references.
     
     Output the search results into the state. Your output is used by downstream agents, so proper formatting is critical.
     """,
@@ -414,72 +330,23 @@ finder_agent = LlmAgent(
 
 organizer_agent = LlmAgent(
     name="organizer_agent",
-    model="gemini-2.0-flash-exp",
+    model="gemini-2.0-flash",
     description="Agent that organizes content into a user friendly readable structure.",
     instruction="""
-    You are an expert content organizer who structures information for maximum readability and comprehension.
-    
-    CORE OBJECTIVES:
-    1. Transform raw research content into a clear, well-structured format
-    2. Maintain factual accuracy while improving readability
-    3. Create logical information hierarchy for easy scanning
-    4. Ensure content flows naturally from general to specific information
-    
-    FORMATTING REQUIREMENTS:
+    Organize and format the provided content in a user friendly, clear, and readable way.
+
     - All section headings must end with a colon (:)
-    - Use only these approved characters: letters, numbers, spaces, periods, commas, parentheses, quotation marks, apostrophes, and bullet points (•)
-    - FORBIDDEN characters: *, #, _, `, =, -, [], {}, <>, |, \, /
-    - Use bullet points (•) for lists, never dashes or asterisks
-    - Maintain consistent spacing: single line breaks between paragraphs, double line breaks before new sections
-    
-    CONTENT STRUCTURE GUIDELINES:
-    1. Start with a brief overview or introduction (2-3 sentences)
-    2. Organize information into logical sections with descriptive headings
-    3. Present information in order of importance (most crucial first)
-    4. Use subsections only when necessary for complex topics
-    5. End with key takeaways or conclusions if applicable
-    
-    SECTION HEADING BEST PRACTICES:
-    - Use clear, descriptive titles that preview the content
-    - Keep headings concise (3-8 words ideal)
-    - Use parallel structure for related sections
-    - Examples: "Definition and Overview:", "Key Benefits:", "Common Applications:", "Important Considerations:"
-    
-    CONTENT ORGANIZATION RULES:
-    - Group related information together
-    - Use bullet points for lists of 3+ items
-    - Keep paragraphs focused on single concepts
-    - Ensure smooth transitions between sections
-    - Remove redundant information while preserving all unique facts
-    
-    QUALITY STANDARDS:
-    - Maintain all factual information from the source content
-    - Improve clarity without changing meaning
-    - Ensure content is scannable with clear visual hierarchy
-    - Make complex information accessible to general audiences
-    - Preserve technical accuracy while improving readability
-    
-    PROHIBITED ACTIONS:
-    - Do not add new information not present in the source
-    - Do not include personal opinions or commentary
-    - Do not change facts, statistics, or specific details
-    - Do not remove important technical information
-    - Do not create misleading simplifications
-    
-    OUTPUT VALIDATION:
-    Before finalizing, ensure your output:
-    • Has clear, descriptive section headings ending with colons
-    • Uses only approved formatting characters
-    • Maintains all factual content from the source
-    • Flows logically from section to section
-    • Is easily scannable and readable
+    - Do not use any special characters such as *, #, _, `, =, or - anywhere in the output (except for the bullet character •).
+    - Do not add any new information or commentary
+    — Only organize and format what is given.
+    - Use your best judgment for structure, spacing, and readability.
     """,
     output_key="organized_content"
 )
 
 content_agent = LlmAgent(
     name="sources_agent",
-    model="gemini-2.0-flash-exp",
+    model="gemini-2.0-flash",
     description="Agent for fetching the content for the given query",
     instruction="""You are an expert at organizing the content for a given topic.
     
@@ -615,10 +482,24 @@ async def get_information(query: str):
             print(traceback.format_exc())
             formatted_sources = [{
                 "title": "Error processing sources",
-                "source": "System",
                 "link": "",
-                "year": "2025"
+                "snippet": f"Error: {str(e)}",
+                "citation": "Error in processing"
             }]
+                
+        # Process sources to ensure they have all required fields
+        for source in formatted_sources:
+            if "citation" not in source:
+                # Generate a citation if missing
+                title = source.get("title", "")
+                link = source.get("link", "")
+                if link:
+                    from datetime import datetime
+                    year = datetime.now().year
+                    domain = link.split("//")[-1].split("/")[0] if link else "Unknown Source"
+                    source["citation"] = f"{domain}. ({year}). {title}. Retrieved from {link}"
+                else:
+                    source["citation"] = f"{title}"
         
         # Perform one final state refresh to ensure we have the latest values
         final_response = await get_state_value('organized_content') or final_response

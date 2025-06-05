@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 import { setCurrentView } from "../store/slices/uiSlice";
 import ErrorBoundary from "../components/common/ErrorBoundary";
@@ -10,6 +10,7 @@ import {
   endTiming,
   logPerformance,
 } from "../utils/performanceMonitoring";
+import { fetchSearchHistory } from "../services/api";
 import "../styles/glassmorphism.css";
 import "../styles/siri-text.css";
 import "../styles/common-pages.css";
@@ -17,6 +18,7 @@ import "../styles/text-utilities.css";
 import "../styles/search-modal.css";
 import "../styles/section-spacing.css";
 import "../styles/performance-optimizations.css";
+import "../styles/recent-searches.css";
 
 /**
  * Home page component - the main dashboard with glassmorphism design
@@ -28,6 +30,7 @@ const HomePage = () => {
   // State for search modal
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   // State for subtle animated background elements
   const [backgroundElements, setBackgroundElements] = useState<
@@ -73,6 +76,22 @@ const HomePage = () => {
     } else if (openSearchParam === "true") {
       setIsSearchModalOpen(true);
     }
+
+    // Load recent searches from database
+    const loadRecentSearches = async () => {
+      try {
+        const history = await fetchSearchHistory(4);
+        if (history && history.length > 0) {
+          // Extract the query text from each history item
+          const searchQueries = history.map((item: any) => item.query);
+          setRecentSearches(searchQueries);
+        }
+      } catch (error) {
+        console.error("Error loading recent searches:", error);
+      }
+    };
+
+    loadRecentSearches();
   }, [dispatch]);
 
   // Preload modal data when the component mounts
@@ -137,8 +156,8 @@ const HomePage = () => {
           <div className="app-container">
             {/* Welcome section */}
             <section className="mb-16 mt-10">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 siri-heading">
-                Welcome back, <span>{user?.username || "User"}</span>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 siri-heading text-gradient">
+                Welcome back, <span>{user?.username || "User"}!</span>
               </h1>
               <p className="text-lg siri-text-subtle leading-relaxed max-w-3xl">
                 Access accurate, reliable information from trusted sources.
@@ -146,21 +165,34 @@ const HomePage = () => {
               </p>
             </section>
 
-            {/* Centered search section */}
+            {/* Centered search section with search button below input field */}
             <section className="flex justify-center items-center mt-16 mb-16">
-              <div className="glass p-8 rounded-2xl max-w-3xl w-full">
-                <h2 className="text-xl font-semibold mb-6 siri-heading">
+              <div className="glass glass-card p-8 rounded-2xl max-w-3xl w-full">
+                <h2 className="text-2xl font-semibold mb-6 siri-heading text-gradient section-title w-fit">
                   What would you like to know?
                 </h2>
-                <div className="flex items-center gap-4">
-                  <div className="relative flex-grow">
+                <div className="w-full">
+                  <div className="relative w-full">
                     <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[rgba(255,255,255,0.5)]">
-                      🔍
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={1.5}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                      </svg>
                     </span>
                     <input
                       type="text"
                       placeholder="Ask a question or search for a topic..."
-                      className="auth-form-input pl-12 w-full focus:border-[rgba(156,90,255,0.2)] transition-all pr-4 bg-[rgba(255,255,255,0.04)] border-[rgba(255,255,255,0.06)]"
+                      className="auth-form-input pl-12 w-full focus:border-[rgba(156,90,255,0.25)] transition-all pr-4 bg-[rgba(255,255,255,0.03)] border-[rgba(255,255,255,0.08)] h-12 rounded-xl"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onKeyDown={(e) => {
@@ -173,8 +205,22 @@ const HomePage = () => {
                           // Use the performance utility for modal preparation
                           prepForModalDisplay();
 
+                          // Update recent searches in local state
+                          if (searchQuery.trim()) {
+                            setRecentSearches((prev) => {
+                              // Remove the search if it already exists
+                              const filtered = prev.filter(
+                                (item) => item !== searchQuery.trim()
+                              );
+                              // Add new search to beginning and limit to 4 items
+                              return [searchQuery.trim(), ...filtered].slice(
+                                0,
+                                4
+                              );
+                            });
+                          }
+
                           // Better animation timing with double requestAnimationFrame
-                          // This helps ensure CSS transitions are properly sequenced
                           window.requestAnimationFrame(() => {
                             window.requestAnimationFrame(() => {
                               setIsSearchModalOpen(true);
@@ -195,8 +241,10 @@ const HomePage = () => {
                       }}
                     />
                   </div>
+                  <div style={{ height: "1.5rem" }}></div>{" "}
+                  {/* Spacer div to create gap */}
                   <button
-                    className="glass-button glass-button-primary py-2.5 px-6"
+                    className="simple-button primary-button rounded-xl flex items-center justify-center gap-2 text-sm h-12 px-8"
                     onClick={() => {
                       // Use the performance utility for modal preparation
                       if (searchQuery.trim()) {
@@ -206,8 +254,22 @@ const HomePage = () => {
                         // Use enhanced modal preparation flow
                         prepForModalDisplay();
 
+                        // Update recent searches in local state
+                        if (searchQuery.trim()) {
+                          setRecentSearches((prev) => {
+                            // Remove the search if it already exists
+                            const filtered = prev.filter(
+                              (item) => item !== searchQuery.trim()
+                            );
+                            // Add new search to beginning and limit to 4 items
+                            return [searchQuery.trim(), ...filtered].slice(
+                              0,
+                              4
+                            );
+                          });
+                        }
+
                         // Optimized animation timing with double requestAnimationFrame
-                        // This creates a smoother transition by ensuring CSS is applied first
                         window.requestAnimationFrame(() => {
                           document.body.classList.add("optimize-transitions");
 
@@ -233,20 +295,63 @@ const HomePage = () => {
                     Search
                   </button>
                 </div>
-
-                <div className="flex justify-center mt-6">
-                  <Link
-                    to="/app/saved"
-                    className="text-sm text-[rgba(156,90,255,0.9)] hover:text-[rgba(156,90,255,1)] transition-all"
-                  >
-                    View your saved items →
-                  </Link>
-                </div>
               </div>
             </section>
 
-            {/* Placeholder for future content */}
-            <div className="h-32"></div>
+            {/* Section divider */}
+            <div className="section-divider"></div>
+
+            {/* Recent Searches section */}
+            <section className="recent-searches-container mb-16">
+              <h2 className="text-2xl font-semibold mb-6 siri-heading text-gradient section-title">
+                Recent Searches
+              </h2>
+              <div className="max-w-3xl w-full mx-auto">
+                {recentSearches.length > 0 ? (
+                  <div className="search-items-container">
+                    {recentSearches.map((search, index) => (
+                      <div
+                        key={index}
+                        className="search-item w-fit"
+                        onClick={() => {
+                          setSearchQuery(search);
+                          setIsSearchModalOpen(true);
+                        }}
+                      >
+                        <div className="search-item-content">
+                          <span className="search-icon">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-3.5 w-3.5"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={1.5}
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                              />
+                            </svg>
+                          </span>
+                          <span className="search-text">{search}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-3">
+                    <p className="text-[rgba(255,255,255,0.7)] mb-2">
+                      No recent searches yet
+                    </p>
+                    <p className="text-sm text-[rgba(255,255,255,0.5)]">
+                      Your search history will appear here for quick access
+                    </p>
+                  </div>
+                )}
+              </div>
+            </section>
           </div>
         </main>
       </div>

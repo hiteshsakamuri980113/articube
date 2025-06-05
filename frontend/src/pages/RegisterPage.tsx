@@ -8,6 +8,7 @@ import "../styles/glassmorphism.css";
 import "../styles/siri-text.css";
 import "../styles/common-pages.css";
 import "../styles/text-utilities.css";
+import AppFooter from "../components/common/AppFooter";
 
 const RegisterPage: React.FC = () => {
   // State for subtle animated background elements - matching landing page
@@ -359,18 +360,7 @@ const RegisterPage: React.FC = () => {
             </div>
           </section>
         </div>
-
-        {/* Footer - matching landing page */}
-        <footer className="glass-footer py-8">
-          <div className="app-container">
-            <div className="text-center siri-text-subtle text-sm">
-              <p className="flex items-center justify-center">
-                © {new Date().getFullYear()} Made with
-                <span className="heart-icon mx-2">❤</span> by hitesh
-              </p>
-            </div>
-          </div>
-        </footer>
+        <AppFooter />
       </main>
     </div>
   );

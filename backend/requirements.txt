@@ -2,6 +2,7 @@
 fastapi>=0.110.0
 uvicorn>=0.26.0
 pydantic>=2.6.0
+pydantic-settings>=2.2.1 # Added for environment variable management
 python-dotenv>=1.0.0
 python-multipart>=0.0.7
 

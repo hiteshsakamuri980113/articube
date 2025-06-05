@@ -13,8 +13,6 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import SavedPage from "./pages/SavedPage";
 import AccountPage from "./pages/AccountPage";
-import ContentDetailPage from "./pages/ContentDetailPage";
-import TestPage from "./pages/TestPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Layout from "./components/layout/Layout";
 import ProtectedRoute from "./components/common/ProtectedRoute";
@@ -37,11 +35,6 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterPage />,
-    errorElement: <RouteErrorBoundary />,
-  },
-  {
-    path: "/test",
-    element: <TestPage />,
     errorElement: <RouteErrorBoundary />,
   },
   {
@@ -73,11 +66,6 @@ const router = createBrowserRouter([
         element: <AccountPage />,
         errorElement: <RouteErrorBoundary />,
       },
-      {
-        path: "content/:contentId",
-        element: <ContentDetailPage />,
-        errorElement: <RouteErrorBoundary />,
-      },
     ],
   },
   {
@@ -92,7 +80,6 @@ const router = createBrowserRouter([
 ]);
 
 // Import components
-import NotificationContainer from "./components/common/NotificationContainer";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 
 // App initialization component
@@ -101,8 +88,12 @@ const AppInit = () => {
   const { token, isAuthenticated } = useAppSelector((state: any) => state.auth);
 
   useEffect(() => {
+    console.log("app.tsx use effect called");
     // Try to authenticate with stored token if exists
-    if (token && !isAuthenticated) {
+    console.log(
+      `token and isAuthenticated are: ${token} and ${isAuthenticated}`
+    );
+    if (token) {
       dispatch(fetchCurrentUser());
     }
   }, [dispatch, token, isAuthenticated]);
@@ -110,7 +101,6 @@ const AppInit = () => {
   return (
     <ErrorBoundary>
       <>
-        <NotificationContainer />
         <div className="min-h-screen deep-space-bg">
           <RouterProvider router={router} />
         </div>

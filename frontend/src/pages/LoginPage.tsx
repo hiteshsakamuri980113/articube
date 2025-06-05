@@ -8,6 +8,7 @@ import "../styles/glassmorphism.css";
 import "../styles/siri-text.css";
 import "../styles/common-pages.css";
 import "../styles/text-utilities.css";
+import AppFooter from "../components/common/AppFooter";
 
 /**
  * Login page component with simplified glassmorphism design
@@ -16,7 +17,9 @@ const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoading, error } = useAppSelector((state) => state.auth);
+  const { isLoading, error, isAuthenticated } = useAppSelector(
+    (state) => state.auth
+  );
   const { showSuccess, showError } = useNotification();
 
   // State for subtle animated background elements - matching landing page
@@ -36,6 +39,12 @@ const LoginPage = () => {
     password: "",
     rememberMe: false,
   });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/app");
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     // Generate background elements
@@ -92,6 +101,7 @@ const LoginPage = () => {
 
       if (resultAction) {
         showSuccess("Logged in successfully!", "Welcome Back");
+        // await dispatch(fetchCurrentUser());
         navigate("/app");
       }
     } catch (error) {
@@ -250,18 +260,7 @@ const LoginPage = () => {
             </div>
           </section>
         </div>
-
-        {/* Footer - matching landing page */}
-        <footer className="glass-footer py-8">
-          <div className="app-container">
-            <div className="text-center siri-text-subtle text-sm">
-              <p className="flex items-center justify-center">
-                © {new Date().getFullYear()} Made with
-                <span className="heart-icon mx-2">❤</span> by hitesh
-              </p>
-            </div>
-          </div>
-        </footer>
+        <AppFooter />
       </main>
     </div>
   );

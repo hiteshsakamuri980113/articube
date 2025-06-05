@@ -93,7 +93,9 @@ body.modal-open .header-container {
 }
 
 /* Style for when modal is open to dim background content */
-body.modal-open .app-container > *:not(.search-modal-overlay),
+body.modal-open
+  .app-container
+  > *:not(.search-modal-overlay, .view-content-modal-overlay),
 body.modal-open .header-container {
   filter: blur(12px) brightness(0.2);
   transition: filter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -109,7 +111,9 @@ body.prepare-modal .header-container {
 }
 
 /* Active state for staggered animation */
-body.modal-active .app-container > *:not(.search-modal-overlay),
+body.modal-active
+  .app-container
+  > *:not(.search-modal-overlay, .view-content-modal-overlay),
 body.modal-active .header-container {
   filter: blur(12px) brightness(0.2);
 }
@@ -131,7 +135,9 @@ body.modal-active .header-container {
 }
 
 /* Modal spotlight effect - enhances visual elements when modal is open */
-body.modal-open .app-container > *:not(.search-modal-overlay),
+body.modal-open
+  .app-container
+  > *:not(.search-modal-overlay, .view-content-modal-overlay),
 body.modal-open .header-container {
   filter: blur(12px) brightness(0.2);
   transition: filter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
