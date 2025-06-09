@@ -78,3 +78,10 @@ async def health_check():
     Root endpoint for API health check.
     """
     return {"status": "ok", "message": "ArtiCube API is running"}
+
+@app.get("/api/v1/health", tags=["Health"])
+async def api_health_check():
+    """
+    API v1 health check endpoint for deployment health checks.
+    """
+    return {"status": "ok", "message": "ArtiCube API v1 is running"}

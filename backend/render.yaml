@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: articube-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URL
+        fromDatabase:
+          name: articube-mongodb
+          property: connectionString
+      - key: MONGODB_DB_NAME
+        value: articube
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 1440
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GOOGLE_GENAI_USE_VERTEXAI
+        value: false
+      - key: API_V1_STR
+        value: /api/v1
+      - key: CORS_ORIGINS
+        value: '["https://your-vercel-app.vercel.app", "http://localhost:3000", "http://localhost:5173"]'
+
+databases:
+  - name: articube-mongodb
+    databaseName: articube
+    user: articube
