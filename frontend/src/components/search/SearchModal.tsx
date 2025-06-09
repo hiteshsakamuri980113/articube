@@ -19,7 +19,6 @@ import {
 import EnhancedLoading from "./EnhancedLoading";
 import EnhancedResults from "./EnhancedResults";
 import "../../styles/search-modal.css";
-import "../../styles/search-history-items.css";
 import "../../styles/animations.css";
 import "../../styles/enhanced-components.css";
 import "../../styles/performance-optimizations.css"; // Import performance optimizations
