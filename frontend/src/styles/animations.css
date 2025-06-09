@@ -110,52 +110,6 @@
   animation: soft-fade-in 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
 
-.animate-slide-up {
-  animation: elegant-slide-up 0.7s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-}
-
 .animate-float {
   animation: elegant-float 6s ease-in-out infinite;
-}
-
-.animate-breathe {
-  animation: soft-breathe 8s ease-in-out infinite;
-}
-
-.animate-scale {
-  animation: subtle-scale 5s ease-in-out infinite;
-}
-
-/* Animation delays */
-.delay-100 {
-  animation-delay: 0.1s;
-}
-
-.delay-200 {
-  animation-delay: 0.2s;
-}
-
-.delay-300 {
-  animation-delay: 0.3s;
-}
-
-.delay-500 {
-  animation-delay: 0.5s;
-}
-
-/* Animation durations */
-.duration-slow {
-  animation-duration: 1.5s;
-}
-
-.duration-slower {
-  animation-duration: 2s;
-}
-
-.duration-fast {
-  animation-duration: 0.5s;
-}
-
-.duration-faster {
-  animation-duration: 0.3s;
 }

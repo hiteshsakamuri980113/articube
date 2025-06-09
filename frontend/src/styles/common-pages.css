@@ -27,11 +27,6 @@
   transform: translateY(-2px);
 }
 
-/* Page section styles */
-.page-section {
-  margin-bottom: 3rem;
-}
-
 /* Deep space background animation for floating orbs */
 @keyframes subtle-pulse {
   0%,
@@ -74,11 +69,6 @@
   box-sizing: border-box; /* Include padding and border in the element's width */
 }
 
-/* Add spacing to the first form group for better separation
-form > .auth-form-group:first-of-type {
-  margin-top: 0.5rem;
-} */
-
 .support-button {
   margin-bottom: 0.75rem;
 }
@@ -94,16 +84,7 @@ form > .auth-form-group:first-of-type {
   box-sizing: border-box; /* Include padding in width calculation */
 }
 
-/* Special styles for flex container with "Forgot password?" link */
-.auth-form-group .flex {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.auth-form-group .flex .auth-form-label {
-  flex: 1;
-  min-width: 0; /* Allows the label to shrink if needed */
-}
+/* Special styles for flex container with "Forgot password?" link - removed unused selectors */
 
 .auth-form-input {
   width: 100%;
@@ -128,7 +109,6 @@ form > .auth-form-group:first-of-type {
   border-color: rgba(156, 90, 255, 0.3);
   box-shadow: 0 0 10px rgba(156, 90, 255, 0.12);
   outline: none;
-  /* Removed transform effect for more subtle appearance */
 }
 
 /* Error styles */
@@ -266,11 +246,6 @@ form > .auth-form-group:first-of-type {
 
 /* Using the form-error definition from earlier in the file */
 
-.form-error-icon {
-  margin-right: 0.25rem;
-  flex-shrink: 0;
-}
-
 .back-to-landing {
   margin-top: 1.5rem;
 }
@@ -294,25 +269,7 @@ form > .auth-form-group:first-of-type {
 .glass-card > div:first-of-type {
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
-  /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
   position: relative;
-}
-
-/* Create a subtle gradient line below the header */
-.glass-card > div:first-of-type:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  /* background: linear-gradient(
-    to right,
-    rgba(156, 90, 255, 0.2),
-    rgba(90, 158, 255, 0.15),
-    rgba(156, 90, 255, 0.05)
-  ); */
-  transform: translateY(1px);
 }
 
 /* Account toggle text styling */

@@ -82,21 +82,6 @@
   height: 100%;
 }
 
-.info-label {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.info-value {
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 1rem;
-  font-weight: 500;
-}
-
 /* Enhanced sign out button */
 .account-signout-btn {
   width: 100%;
@@ -161,98 +146,18 @@
   animation: gradientShift 5s ease infinite;
 }
 
-/* Button styling */
-/* .account-button {
-  position: relative;
-  overflow: hidden;
-  background: rgba(91, 36, 255, 0.15);
-  border: 1px solid rgba(138, 101, 255, 0.3);
-  color: white;
-  font-weight: 500;
-  padding: 12px 24px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(91, 36, 255, 0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  min-width: 150px;
-}
-
-.account-button:hover {
-  background: rgba(91, 36, 255, 0.25);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(91, 36, 255, 0.2);
-}
-
-.account-button:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 8px rgba(91, 36, 255, 0.1);
-}
-
-.account-primary-button {
-  background: linear-gradient(135deg, #5b24ff 0%, #8a65ff 100%);
-  border: none;
-}
-
-.account-primary-button:hover {
-  background: linear-gradient(135deg, #6a33ff 0%, #9874ff 100%);
-}
-
-.account-section-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 24px;
-  color: #fff;
-  position: relative;
-  display: inline-block;
-}
-
-.account-section-title::after {
-  content: "";
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 40px;
-  height: 3px;
-  background: linear-gradient(to right, #5b24ff, #8a65ff);
-  border-radius: 3px;
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-} */
-
-.info-item {
-  position: relative;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  transition: all 0.3s ease;
-}
-
-.info-item:hover {
-  background: rgba(30, 30, 40, 0.3);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
+/* Info label and value styles - used for user information display */
 .info-label {
   font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 0.05em;
   color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
 .info-value {
   font-size: 1rem;
   font-weight: 500;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.95);
 }

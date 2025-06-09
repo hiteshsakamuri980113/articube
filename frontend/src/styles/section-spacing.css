@@ -25,11 +25,7 @@
   opacity: 0.6;
 }
 
-.section-container {
-  padding: 3rem 0; /* Increased padding for better spacing */
-  position: relative;
-  margin-bottom: 4rem; /* Added bottom margin for better section separation */
-}
+/* Unused section-container class removed */
 
 /* Enhanced section title styling */
 .section-title {
@@ -111,8 +107,18 @@ section:nth-child(6) {
     font-size: 1.5rem;
   }
 
-  .highlight-item,
-  .architecture-item,
+  .content-block {
+    margin-bottom: 4rem;
+  }
+
+  .section-divider {
+    margin: 3rem 0;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
   .tech-stack-item {
     padding: 1.25rem;
   }
@@ -124,65 +130,6 @@ section:nth-child(6) {
   .glass-footer {
     text-align: center;
   }
-
-  .social-link {
-    padding: 0.5rem;
-  }
-}
-
-/* Architecture Section Improvements - with subtle glowing effect instead of movement */
-.architecture-item {
-  padding: 1.5rem;
-  border-radius: 16px;
-  background: rgba(40, 40, 40, 0.2);
-  height: 100%;
-  border: 1px solid rgba(80, 80, 80, 0.1);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-}
-
-.architecture-item:hover {
-  background: rgba(50, 50, 50, 0.25);
-  box-shadow: 0 0 25px rgba(156, 90, 255, 0.07);
-  border-color: rgba(156, 90, 255, 0.12);
-}
-
-/* Highlight Item Styling - with subtle glow effect instead of movement */
-.highlight-item {
-  padding: 1.5rem;
-  border-radius: 16px;
-  background: rgba(40, 40, 40, 0.2);
-  transition: all 0.4s ease;
-  border: 1px solid rgba(80, 80, 80, 0.1);
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-}
-
-.highlight-item:hover {
-  background: rgba(45, 45, 45, 0.25);
-  box-shadow: 0 0 30px rgba(156, 90, 255, 0.08);
-  border-color: rgba(156, 90, 255, 0.12);
-}
-
-.highlight-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 3px;
-  height: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(156, 90, 255, 0.6),
-    rgba(90, 158, 255, 0.6)
-  );
-  transition: height 0.6s ease;
-}
-
-.highlight-item:hover::before {
-  height: 100%;
 }
 
 /* Tech Stack Item Styling - with subtle glowing effect instead of movement */
@@ -223,37 +170,9 @@ section:nth-child(6) {
   opacity: 1;
 }
 
-/* Tech image container */
-.tech-image-container {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  transition: all 0.4s ease;
-}
+/* Tech image container removed - unused */
 
-.tech-image-container:hover {
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(156, 90, 255, 0.12);
-}
-
-/* Staggered reveal animations - more subtle */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.tech-stack-item li,
-.highlight-item li,
-.architecture-item li {
-  animation: fadeInUp 0.8s ease forwards;
-  opacity: 0;
-}
+/* Duplicate fadeInUp animation and unused list animations removed */
 
 /* Tech stack item animations - more gentle timing */
 .tech-stack-item:nth-child(1) li:nth-child(1) {
@@ -332,115 +251,11 @@ section:nth-child(6) {
   animation-delay: 1.05s;
 }
 
-/* Tech Stack Column Styling */
-.tech-stack-column {
-  padding: 1rem;
-  background: rgba(40, 40, 40, 0.1);
-  border-radius: 8px;
-  border: 1px solid rgba(80, 80, 80, 0.2);
-}
+/* Tech Stack Column Styling removed - unused */
 
-.tech-stack-column h3 {
-  margin-bottom: 0.75rem;
-}
+/* Code Terminal styles removed - unused */
 
-.tech-stack-column ul li {
-  line-height: 1.6;
-}
-
-/* Code Terminal Improvements - with subtle glow instead of motion */
-.code-terminal {
-  position: relative;
-  transition: all 0.5s ease;
-  border: 1px solid rgba(60, 60, 60, 0.4);
-}
-
-.code-terminal:hover {
-  box-shadow: 0 0 25px rgba(156, 90, 255, 0.1);
-  border-color: rgba(156, 90, 255, 0.2);
-}
-
-/* Add a subtle glow effect to the terminal when hovered */
-.code-terminal::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(156, 90, 255, 0.1);
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.code-terminal:hover::after {
-  opacity: 1;
-}
-
-/* Add typing animation to the terminal text - slower for better readability */
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-.code-terminal p {
-  overflow: hidden;
-  white-space: nowrap;
-  animation: typing 3.5s steps(40, end);
-}
-
-.code-terminal p:nth-child(1) {
-  animation-delay: 0.3s;
-}
-.code-terminal p:nth-child(2) {
-  animation-delay: 1s;
-}
-.code-terminal p:nth-child(3) {
-  animation-delay: 1.7s;
-}
-.code-terminal p:nth-child(4) {
-  animation-delay: 2.4s;
-}
-.code-terminal p:nth-child(5) {
-  animation-delay: 3.1s;
-}
-.code-terminal p:nth-child(6) {
-  animation-delay: 3.8s;
-}
-.code-terminal p:nth-child(7) {
-  animation-delay: 4.5s;
-}
-.code-terminal p:nth-child(8) {
-  animation-delay: 5.2s;
-}
-
-/* Improved list icons - with subtle glow */
-.glass-list-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 12px rgba(156, 90, 255, 0.06);
-  transition: box-shadow 0.4s ease, background-color 0.4s ease,
-    border-color 0.4s ease;
-  background-color: rgba(45, 45, 45, 0.3);
-  border: 1px solid rgba(156, 90, 255, 0.08);
-}
-
-.glass-list-icon:hover {
-  box-shadow: 0 0 15px rgba(156, 90, 255, 0.12);
-  background-color: rgba(55, 55, 55, 0.35);
-  border-color: rgba(156, 90, 255, 0.2);
-}
+/* glass-list-icon removed - duplicate of glassmorphism.css */
 
 /* Section title styling */
 .section-title {
@@ -516,88 +331,13 @@ section:nth-child(6) {
   left: 100%;
 }
 
-.glass-button-primary {
-  background: linear-gradient(
-    to right,
-    rgba(156, 90, 255, 0.12),
-    rgba(90, 158, 255, 0.12)
-  );
-  color: white;
-  box-shadow: 0 0 15px rgba(156, 90, 255, 0.05);
-}
-
-.glass-button-primary:hover {
-  background: linear-gradient(
-    to right,
-    rgba(156, 90, 255, 0.2),
-    rgba(90, 158, 255, 0.2)
-  );
-  box-shadow: 0 0 20px rgba(90, 158, 255, 0.1);
-  border-color: rgba(156, 90, 255, 0.3);
-}
-
 /* Enhanced glass button styles */
 .glass-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(156, 90, 255, 0.5);
 }
 
-.glass-button-primary:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(90, 158, 255, 0.5);
-}
-
-.glass-button-enhanced {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.5s ease;
-  border-radius: 12px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(156, 90, 255, 0.15);
-  box-shadow: 0 0 12px rgba(90, 158, 255, 0.05);
-}
-
-.glass-button-enhanced:hover {
-  box-shadow: 0 0 20px rgba(90, 158, 255, 0.08);
-  border-color: rgba(156, 90, 255, 0.25);
-}
-
-.glass-button-enhanced::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  transition: left 0.8s ease;
-}
-
-.glass-button-enhanced:hover::before {
-  left: 100%;
-}
-
-.glass-button-primary-enhanced {
-  background: linear-gradient(
-    to right,
-    rgba(156, 90, 255, 0.15),
-    rgba(90, 158, 255, 0.15)
-  );
-}
-
-.glass-button-primary-enhanced:hover {
-  background: linear-gradient(
-    to right,
-    rgba(156, 90, 255, 0.2),
-    rgba(90, 158, 255, 0.2)
-  );
-}
+/* Unused glass-button-primary and enhanced variants removed */
 
 /* Simple button styles */
 .simple-button {
@@ -656,77 +396,9 @@ section:nth-child(6) {
   box-shadow: 0 0 0 2px rgba(90, 158, 255, 0.5);
 }
 
-/* Glass tag styling */
-.glass-tag {
-  background: rgba(60, 60, 60, 0.25);
-  border: 1px solid rgba(156, 90, 255, 0.1);
-  box-shadow: 0 0 10px rgba(90, 158, 255, 0.04);
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(5px);
-}
+/* Glass tag styling removed - unused */
 
-.glass-tag:hover {
-  background: rgba(65, 65, 65, 0.3);
-  border-color: rgba(156, 90, 255, 0.2);
-  box-shadow: 0 0 15px rgba(90, 158, 255, 0.06);
-}
-
-.glass-tag::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  transition: left 0.8s ease;
-}
-
-.glass-tag:hover::after {
-  left: 100%;
-}
-
-/* Social links improvement */
-.social-link {
-  transition: color 0.4s ease;
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-  color: rgba(255, 255, 255, 0.7);
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
-}
-
-.social-link:hover {
-  color: rgba(156, 90, 255, 0.9);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.social-link::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -1px;
-  left: 0;
-  background: linear-gradient(
-    to right,
-    rgba(156, 90, 255, 0.7),
-    rgba(90, 158, 255, 0.7)
-  );
-  transition: width 0.4s ease;
-}
-
-.social-link:hover::after {
-  width: 100%;
-}
+/* Social links removed - unused */
 
 /* Background shine effects - more subtle glowing effect */
 .glass-shine {
@@ -769,40 +441,4 @@ section:nth-child(6) {
   box-shadow: 0 0 20px rgba(156, 90, 255, 0.05);
 }
 
-/* Enhanced card styling */
-.enhanced-card {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 0 15px rgba(90, 158, 255, 0.04);
-  transition: all 0.4s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
 
-.enhanced-card:hover {
-  box-shadow: 0 0 20px rgba(156, 90, 255, 0.06);
-  border-color: rgba(156, 90, 255, 0.15);
-}
-
-/* Architecture card styling */
-.architecture-card {
-  padding: 1.25rem;
-  background: rgba(40, 40, 40, 0.1);
-  border-radius: 8px;
-  border: 1px solid rgba(80, 80, 80, 0.2);
-  margin-bottom: 1rem;
-  transition: all 0.4s ease;
-}
-
-.architecture-card:hover {
-  background: rgba(45, 45, 45, 0.15);
-  border-color: rgba(156, 90, 255, 0.1);
-  box-shadow: 0 0 15px rgba(156, 90, 255, 0.04);
-}
-
-.architecture-card h3 {
-  margin-bottom: 0.75rem;
-}
-
-.architecture-card ul li {
-  line-height: 1.6;
-}

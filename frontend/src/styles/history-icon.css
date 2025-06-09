@@ -39,14 +39,6 @@
   );
 }
 
-.history-button-icon {
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateZ(0);
-}
-
 .history-button-text {
   font-size: 14px;
   font-weight: 500;

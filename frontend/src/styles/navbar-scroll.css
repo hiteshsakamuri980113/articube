@@ -32,19 +32,7 @@
   width: 100%;
 }
 
-/* Animation for navbar */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Apply animation to navbar */
+/* Apply animation to navbar - using existing fadeIn from animations.css */
 .navbar-container {
   animation: fadeIn 0.3s ease-out;
   display: flex;
@@ -92,28 +80,12 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 2rem !important; /* Force larger size */
-  padding: 5px 0;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 /* Logo hover effect */
 .app-logo:hover {
   text-shadow: 0 4px 20px rgba(156, 90, 255, 0.5);
   transform: scale(1.02);
-}
-
-/* Very subtle pulse animation for logo hover */
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.01);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
 
 /* Navbar button styles */

@@ -330,18 +330,6 @@
   box-shadow: 0 0 8px rgba(156, 90, 255, 0.4); /* Medium glow effect */
 }
 
-/* Page counter */
-.page-counter {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin-left: 4px;
-  font-weight: 500;
-  background: rgba(156, 90, 255, 0.2);
-  padding: 2px 8px;
-  border-radius: 10px;
-  border: 1px solid rgba(156, 90, 255, 0.2);
-}
-
 /* Enhanced Netflix-style loading skeletons */
 .skeleton-card {
   cursor: default;
@@ -469,17 +457,4 @@
   background-clip: text;
   color: transparent;
   display: inline-block;
-}
-
-/* Add the missing keyframe animation for subtle-shimmer */
-@keyframes subtle-shimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }

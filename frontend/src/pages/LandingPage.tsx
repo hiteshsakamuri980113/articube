@@ -7,9 +7,7 @@ import "../styles/siri-text.css";
 import "../styles/section-spacing.css";
 import "../styles/deep-space-bg.css";
 import "../styles/footer-styles.css";
-import "../styles/shadow-effects.css";
 import "../styles/tech-stack-responsive.css";
-import "../styles/footer-styles.css";
 import AppFooter from "../components/common/AppFooter";
 
 // Icon Components

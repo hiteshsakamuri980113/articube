@@ -37,52 +37,6 @@
   text-shadow: 0 1px 2px rgba(15, 24, 73, 0.1);
 }
 
-/* Apple-inspired gradient text */
-.apple-gradient-text {
-  background: linear-gradient(
-    to right,
-    rgba(230, 236, 255, 1),
-    rgba(200, 210, 255, 0.85)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* New accent colored text gradients */
-.accent-purple-text {
-  background: linear-gradient(
-    to right,
-    rgba(156, 90, 255, 1),
-    rgba(130, 80, 220, 0.9)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.accent-blue-text {
-  background: linear-gradient(
-    to right,
-    rgba(90, 158, 255, 1),
-    rgba(80, 130, 220, 0.9)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.accent-pink-text {
-  background: linear-gradient(
-    to right,
-    rgba(255, 90, 143, 1),
-    rgba(220, 80, 130, 0.9)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
 /* Text gradient styling */
 .text-gradient {
   background: linear-gradient(
