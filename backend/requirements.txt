@@ -10,6 +10,7 @@ python-jose==3.4.0
 # Google ADK for Agent Development*
 google-adk==1.1.1
 google-genai==1.15.0  # For Gemini models*
+deprecated==1.2.14  # Required by google-adk
 
 # MongoDB integration*
 pymongo==4.12.1
