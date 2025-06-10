@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../hooks/reduxHooks";
+import "../../styles/header-menu.css";
 
 /**
  * Fixed menu component for navigation in protected routes
