@@ -145,11 +145,9 @@ export const measureModalFCP = (targetSelector: string): Promise<number> => {
 export const trackFrameRate = (durationMs: number = 2000): Promise<number> => {
   return new Promise((resolve) => {
     let frameCount = 0;
-    let lastFrameTime = performance.now();
 
     const countFrame = () => {
       frameCount++;
-      lastFrameTime = performance.now();
       requestAnimationFrame(countFrame);
     };
 

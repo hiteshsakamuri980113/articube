@@ -46,7 +46,6 @@ const SearchModal: React.FC<SearchModalProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const [animationActive, setAnimationActive] = useState(false);
   const [historyExpanded, setHistoryExpanded] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false);
 
   // previousQuery ref to track query changes and prevent duplicate searches
   const previousQueryRef = useRef<string>("");
@@ -59,9 +58,6 @@ const SearchModal: React.FC<SearchModalProps> = ({
 
       // Always initiate a search when modal opens with an initialQuery
       if (initialQuery && initialQuery.trim()) {
-        // Mark that we're in searching mode when coming from home page
-        setHasSearched(true);
-
         // Execute search if query is different from previous or if modal was just opened
         if (previousQueryRef.current !== initialQuery) {
           console.log("checking....");
@@ -82,7 +78,6 @@ const SearchModal: React.FC<SearchModalProps> = ({
       // Reset state when modal closes
       previousQueryRef.current = "";
       setHistoryExpanded(false);
-      setHasSearched(false);
     }
   }, [isOpen, initialQuery, dispatch]);
 
@@ -412,8 +407,8 @@ const SearchModal: React.FC<SearchModalProps> = ({
       // Update the previous query reference
       previousQueryRef.current = query;
 
-      // Set hasSearched state to true when a search is initiated
-      setHasSearched(true);
+      // Set previous query reference to prevent duplicate searches
+      previousQueryRef.current = query;
 
       dispatch(setCurrentQuery(query));
       showInfo("Searching for information...", "Knowledge Search");
@@ -434,9 +429,6 @@ const SearchModal: React.FC<SearchModalProps> = ({
     setQuery(historyItem);
     // Update the previous query reference
     previousQueryRef.current = historyItem;
-
-    // Set hasSearched state to true
-    setHasSearched(true);
 
     dispatch(setCurrentQuery(historyItem));
     dispatch(fetchInformation({ query: historyItem }));
