@@ -248,7 +248,7 @@ class ContentProcessor:
 
 def process_content(context: dict) -> str:
     """
-    Process content from session state and format a comprehensive response.
+    Process content from session state and format the response.
     
     Args:
         context: The invocation context containing state

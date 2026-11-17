@@ -251,7 +251,7 @@ const HomePage = () => {
                         // Track performance timing for modal opening
                         const timerId = startTiming("modal-open-from-button");
 
-                        // Use enhanced modal preparation flow
+                        // Prepare the modal before opening it
                         prepForModalDisplay();
 
                         // Update recent searches in local state

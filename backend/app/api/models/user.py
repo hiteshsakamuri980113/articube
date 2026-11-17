@@ -17,7 +17,7 @@ class PyObjectId(str):
         yield cls.validate
         
     @classmethod
-    def validate(cls, v, info=None):  # Added info parameter for Pydantic v2
+    def validate(cls, v, info=None):  # info is required by Pydantic v2
         if not ObjectId.is_valid(v):
             raise ValueError("Invalid ObjectId")
         return str(ObjectId(v))

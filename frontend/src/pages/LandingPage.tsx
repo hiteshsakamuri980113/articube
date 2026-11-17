@@ -193,9 +193,9 @@ const LandingPage = () => {
                   Personalized AI Knowledge Assistant
                 </h1>
                 <p className="text-lg siri-text-subtle mb-8 leading-relaxed">
-                  An AI-powered knowledge assistant built with React,
-                  TypeScript, and Python. Powered to fetch true and accurate
-                  information on your query from the most trusted sources.
+                  A search assistant built with React, TypeScript and Python.
+                  Ask a question and get a short write-up along with the
+                  sources it used.
                 </p>
                 <div className="flex flex-row justify-center gap-4 flex-wrap">
                   <Link
@@ -235,9 +235,8 @@ const LandingPage = () => {
                   AI Agent Integration
                 </h3>
                 <p className="siri-text-subtle text-sm leading-relaxed">
-                  Google ADK-powered Gemini agent with sequential architecture
-                  for accurate information retrieval and source attribution
-                  tracking.
+                  A Google ADK agent running Gemini 2.0 Flash. It searches the
+                  web, organizes the results, and keeps track of the sources.
                 </p>
               </div>
 
@@ -250,9 +249,8 @@ const LandingPage = () => {
                   Modern Frontend
                 </h3>
                 <p className="siri-text-subtle text-sm leading-relaxed">
-                  React.js with TypeScript, Redux Toolkit for state management,
-                  and custom glassmorphism UI components with animations and
-                  transitions.
+                  React with TypeScript, Redux Toolkit for state, and Tailwind
+                  CSS with a custom glass-style interface.
                 </p>
               </div>
 
@@ -265,9 +263,8 @@ const LandingPage = () => {
                   Interactive Search
                 </h3>
                 <p className="siri-text-subtle text-sm leading-relaxed">
-                  Performance-optimized search with glass UI modal, keyboard
-                  navigation, and MongoDB-backed search history with source
-                  attribution.
+                  A search modal, recent searches stored in MongoDB, and a
+                  sources list for every answer.
                 </p>
               </div>
             </div>
@@ -334,7 +331,7 @@ const LandingPage = () => {
                     </li>
                     <li>
                       <span className="dot"></span>
-                      PyJWT
+                      python-jose
                     </li>
                     <li>
                       <span className="dot"></span>
@@ -427,20 +424,19 @@ const LandingPage = () => {
                   <ul className="siri-text-subtle text-sm space-y-3">
                     <li>
                       <span className="dot"></span>
-                      Performance-optimized search modal with hardware
-                      acceleration
+                      Search modal with a loading state and a sources sidebar
                     </li>
                     <li>
                       <span className="dot"></span>
-                      Glassmorphism design system with fluid animations
+                      Glass-style design built with Tailwind and custom CSS
                     </li>
                     <li>
                       <span className="dot"></span>
-                      Virtualized scrolling with scroll snap for touch devices
+                      Saved results page where you can view and delete items
                     </li>
                     <li>
                       <span className="dot"></span>
-                      Advanced performance monitoring and optimizations
+                      Recent searches on the home page
                     </li>
                   </ul>
                 </div>
@@ -452,19 +448,19 @@ const LandingPage = () => {
                   <ul className="siri-text-subtle text-sm space-y-3">
                     <li>
                       <span className="dot"></span>
-                      Async FastAPI with MongoDB for scalable data storage
+                      Async FastAPI with MongoDB (Motor)
                     </li>
                     <li>
                       <span className="dot"></span>
-                      Sequential LLM agent architecture with Google ADK
+                      Google ADK agents for searching and organizing results
                     </li>
                     <li>
                       <span className="dot"></span>
-                      Robust error handling with session state recovery
+                      Fallback response when the agent returns no content
                     </li>
                     <li>
                       <span className="dot"></span>
-                      JWT authentication with secure user management
+                      JWT login with bcrypt-hashed passwords
                     </li>
                   </ul>
                 </div>

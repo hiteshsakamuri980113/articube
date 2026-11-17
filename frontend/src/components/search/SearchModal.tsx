@@ -216,7 +216,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
       // Start performance measurement
       perfTimerId = startTiming("modal-open-to-render");
 
-      // Apply hardware acceleration to modal for smoother animations
+      // Add GPU hints to the modal for the opening animation
       if (modalRef.current) {
         optimizeUITransitions(modalRef.current);
       }

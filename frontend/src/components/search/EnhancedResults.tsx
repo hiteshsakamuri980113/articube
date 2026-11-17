@@ -20,8 +20,7 @@ interface EnhancedResultsProps {
 }
 
 /**
- * Enhanced results component with performance optimizations and smooth animations
- * for better user experience when displaying search results
+ * Renders one search result: the formatted content and a Save button.
  */
 const EnhancedResults: React.FC<EnhancedResultsProps> = ({ result }) => {
   const resultContentRef = useRef<HTMLDivElement>(null);

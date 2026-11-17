@@ -480,7 +480,7 @@ const SavedPage = () => {
                         </div>
                       </div>
 
-                      {/* Enhanced page indicator with dots only */}
+                      {/* Page indicator (dots) */}
                       <div className="page-indicator">
                         {Array.from({
                           length: Math.ceil(group.items.length / 4),

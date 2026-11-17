@@ -1,7 +1,7 @@
 /**
  * File: search-modal-enhanced.js
- * This script provides enhanced modal performance optimizations
- * It's loaded dynamically when needed to prevent unnecessary page bloat
+ * Optional performance tweaks for the search modal (lazy loading, animation hints)
+ * It is loaded dynamically when the modal opens
  */
 
 // Use IntersectionObserver for lazy loading content in the search modal
@@ -79,7 +79,7 @@ const optimizeScroll = () => {
   });
 };
 
-// Apply hardware acceleration to animations with advanced GPU hints
+// Add GPU hints to animated elements
 const optimizeAnimations = () => {
   document.querySelectorAll(".hardware-accelerated").forEach((el) => {
     if (el instanceof HTMLElement) {

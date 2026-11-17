@@ -9,8 +9,7 @@ interface EnhancedLoadingProps {
 }
 
 /**
- * An enhanced loading component with smooth animations and placeholder content
- * for improved perceived performance during search operations
+ * Loading state shown while a search is running (animated placeholder content).
  */
 const EnhancedLoading: React.FC<EnhancedLoadingProps> = ({
   message = "Searching for information",

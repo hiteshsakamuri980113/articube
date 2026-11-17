@@ -115,7 +115,7 @@ async def get_state_value(key: str):
 
 async def get_fact_sources() -> Dict[str, List[Dict[str, str]]]:
     """
-    Process search results into formatted sources with enhanced four-part reference support.
+    Turn the search results into a list of sources (title, source, link, year).
     
     This function accesses the search_results directly from the session state,
     extracts four-part citations (Title, Source, Link, Year) and formats them as sources.

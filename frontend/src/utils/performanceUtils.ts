@@ -3,23 +3,23 @@
  * @param element The element to optimize
  */
 export const optimizeUITransitions = (element: HTMLElement) => {
-  // Force a repaint to ensure smooth animations
+  // Wait for the next frame before applying the classes
   window.requestAnimationFrame(() => {
     element.classList.add("hardware-accelerated");
-    // Add additional performance classes for improved rendering
+    // Promote the element to its own layer
     element.classList.add("promote-layer");
 
-    // Ensure contained rendering for better performance
+    // Limit layout and paint work to this element
     element.style.contain = "layout paint style";
 
-    // For best hardware acceleration, add specific transform hint
+    // Hint the browser to use the GPU for transforms
     element.style.transform = "translateZ(0)";
     element.style.willChange = "transform, opacity";
   });
 };
 
 /**
- * Pre-loads modal for smoother opening with enhanced transition performance
+ * Adds the classes the modal needs before it opens
  */
 export const preloadModal = () => {
   // Add classes to prepare for modal opening
@@ -50,7 +50,7 @@ export const optimizeScrolling = (element: HTMLElement, withFade = false) => {
     element.classList.add("optimize-scrolling");
   }
 
-  // Apply best practices for smooth scrolling
+  // Smooth touch scrolling, and no scroll chaining
   (element.style as any)["-webkit-overflow-scrolling"] = "touch";
   element.style.overscrollBehavior = "contain";
 
