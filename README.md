@@ -1,279 +1,146 @@
-# ArtiCube - AI-Powered Knowledge Retrieval Platform
+# ArtiCube
 
-ArtiCube is a sophisticated AI-powered knowledge retrieval platform that combines advanced search capabilities with intelligent content organization. Built with modern web technologies, it provides users with accurate, well-structured information along with properly cited sources.
+ArtiCube is a search app that answers a question with a short, organized write-up and a list of the sources it used. You type a topic, an AI agent searches the web, and you get structured content back with titles, links and years for each source. You can save results, and your recent searches are kept so you can come back to them.
 
-## 🚀 Features
+It is a full-stack project: Google's Agent Development Kit (ADK) agents behind a FastAPI backend, with a React frontend.
 
-### Core Functionality
-- **Intelligent Search**: AI-powered search that understands context and delivers comprehensive results
-- **Smart Content Organization**: Automatically structures information into readable, scannable format
-- **Source Citations**: Provides proper citations with titles, sources, links, and publication years
-- **Content Management**: Save, organize, and revisit your research findings
-- **Search History**: Track and revisit previous queries for continuous research workflows
-- **User Authentication**: Secure user accounts with JWT-based authentication
+## What it does
 
-### AI Agent System
-- **Multi-Agent Architecture**: Uses Google's Agent Development Kit (ADK) for robust information retrieval
-- **Sequential Processing**: Finder → Content Processor → Organizer → Formatter agent chain
-- **Real-time Search**: Integrates with Google Search API for up-to-date information
-- **Content Validation**: Ensures accuracy and proper source attribution
+- Search a topic and get an organized answer plus a sources list (title, source, link, year)
+- Register with an email, username and password, then log in (JWT auth)
+- Save a result with the Save button, open it again later from the Saved page, and delete it
+- Recent searches on the home page, backed by the stored query history
+- Account page with your profile details and logout
 
-### User Experience
-- **Modern UI**: Glassmorphic design with smooth animations and responsive layout
-- **Performance Optimized**: Fast loading with optimized rendering and caching
-- **Mobile Responsive**: Works seamlessly across all device sizes
-- **Dark Theme**: Elegant dark interface designed for extended reading sessions
+## How a search works
 
-## 🏗️ Architecture
+The backend runs a small group of Gemini 2.0 Flash agents built with Google ADK:
 
-### Backend (Python/FastAPI)
-- **Framework**: FastAPI for high-performance async API
-- **AI Agents**: Google ADK with Gemini 2.0 Flash models
-- **Database**: MongoDB with Motor (async driver)
-- **Authentication**: JWT with bcrypt password hashing
-- **Search Integration**: Google Search API
-- **Deployment**: Render.com with health check endpoints
+1. A coordinating agent (`sources_agent`) receives the topic.
+2. It calls `finder_agent`, which uses the `google_search` tool to collect results.
+3. It calls a `get_fact_sources` function that pulls the source list out of the shared session state.
+4. It calls `organizer_agent`, which turns the search content into the final write-up.
 
-### Frontend (React/TypeScript)
-- **Framework**: React 19 with TypeScript
-- **State Management**: Redux Toolkit with RTK Query
-- **Routing**: React Router v7
-- **Styling**: Tailwind CSS with custom glassmorphic components
-- **Build Tool**: Vite for fast development and optimized builds
-- **Testing**: Jest with Testing Library
-- **Deployment**: Vercel with optimized static builds
+The write-up and the formatted sources are returned from `POST /api/agent/query`, and the query is saved to the user's history.
 
-### Key Technologies
-- **AI/ML**: Google ADK, Gemini 2.0 Flash, LiteLLM
-- **Backend**: FastAPI, Pydantic, Motor, PyJWT, Uvicorn
-- **Frontend**: React, TypeScript, Redux, Tailwind CSS, Axios
-- **Database**: MongoDB Atlas
-- **Authentication**: JWT tokens with secure cookie handling
-- **APIs**: Google Search API, Google Generative AI
+## Tech stack
 
-## 📁 Project Structure
+**Backend:** Python 3.11, FastAPI, Google ADK, MongoDB (Motor), python-jose for JWT, passlib/bcrypt for password hashing
+
+**Frontend:** React 19, TypeScript, Vite, Redux Toolkit, React Router 7, Tailwind CSS, Axios, Jest and Testing Library
+
+**Hosting:** Render for the API, Vercel for the frontend (see [DEPLOYMENT.md](DEPLOYMENT.md))
+
+## Project layout
 
 ```
 articube/
-├── backend/                    # Python FastAPI backend
-│   ├── app/
-│   │   ├── agents/            # AI agent implementations
-│   │   │   ├── knowledge_agent.py    # Main agent orchestrator
-│   │   │   └── backup.py             # Backup agent implementation
-│   │   ├── api/
-│   │   │   ├── models/        # Pydantic data models
-│   │   │   └── routers/       # API route handlers
-│   │   │       ├── agent_router.py   # Agent query endpoints
-│   │   │       ├── content_router.py # Content management
-│   │   │       └── user_router.py    # User authentication
-│   │   ├── auth/              # Authentication utilities
-│   │   ├── db/                # Database configuration
-│   │   └── utils/             # Utility functions
-│   │       ├── content_processor.py  # Content formatting
-│   │       └── json_helpers.py       # JSON utilities
-│   ├── main.py                # FastAPI application entry point
-│   ├── requirements.txt       # Python dependencies
-│   └── render.yaml           # Render deployment config
-├── frontend/                  # React TypeScript frontend
-│   ├── src/
-│   │   ├── components/        # Reusable UI components
-│   │   │   ├── common/        # Shared components
-│   │   │   ├── content/       # Content-related components
-│   │   │   ├── layout/        # Layout components
-│   │   │   └── search/        # Search functionality
-│   │   ├── pages/             # Page components
-│   │   │   ├── LandingPage.tsx       # Marketing landing page
-│   │   │   ├── HomePage.tsx          # Main dashboard
-│   │   │   ├── SavedPage.tsx         # Saved content management
-│   │   │   └── AccountPage.tsx       # User account settings
-│   │   ├── store/             # Redux store configuration
-│   │   │   └── slices/        # Redux slices
-│   │   ├── services/          # API service layer
-│   │   ├── hooks/             # Custom React hooks
-│   │   ├── utils/             # Utility functions
-│   │   └── styles/            # CSS modules and styles
-│   ├── package.json           # Node.js dependencies
-│   └── vercel.json           # Vercel deployment config
-├── DEPLOYMENT.md             # Deployment instructions
-└── README.md                # This file
+├── backend/
+│   ├── main.py                 FastAPI app, CORS, router setup, health checks
+│   └── app/
+│       ├── agents/             ADK agents (knowledge_agent.py)
+│       ├── api/models/         Pydantic models (users, saved content)
+│       ├── api/routers/        agent, content and user routes
+│       ├── auth/               JWT creation and verification
+│       ├── db/                 MongoDB connection
+│       └── utils/              settings, content and JSON helpers
+└── frontend/
+    └── src/
+        ├── pages/              Landing, Login, Register, Home, Saved, Account
+        ├── components/         search modal, results, saved-content modal, layout
+        ├── store/slices/       Redux slices (auth, knowledge, content, ui, notifications)
+        ├── services/api.ts     API calls
+        └── context/            auth, content and knowledge contexts
 ```
 
-## 🛠️ Installation & Setup
+## Running it locally
 
-### Prerequisites
-- Python 3.11+
-- Node.js 18+
-- MongoDB Atlas account
-- Google API key (for search functionality)
-- Git
+You need Python 3.11+, Node 18+, a MongoDB database (Atlas works fine) and a Google API key.
 
-### Backend Setup
+### Backend
 
-1. **Clone the repository**
 ```bash
-git clone <repository-url>
-cd articube/backend
-```
-
-2. **Create virtual environment**
-```bash
+cd backend
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. **Install dependencies**
-```bash
+source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-```
-
-4. **Environment configuration**
-```bash
 cp .env.example .env
 ```
 
-Edit `.env` with your configuration:
+Fill in `.env`. The values the app reads are:
+
 ```env
-MONGODB_URL=mongodb+srv://username:password@cluster.mongodb.net/
+MONGODB_URL=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/
 MONGODB_DB_NAME=articube
-SECRET_KEY=your-secret-key-here
+SECRET_KEY=<any long random string>
 ACCESS_TOKEN_EXPIRE_MINUTES=1440
-GOOGLE_API_KEY=your-google-api-key
-CORS_ORIGINS=["http://localhost:3000", "https://your-frontend-domain.com"]
+GOOGLE_API_KEY=<your Google API key>
+GOOGLE_GENAI_USE_VERTEXAI=false
+CORS_ORIGINS=["http://localhost:5173"]
 ```
 
-5. **Run the backend**
+Then start the server:
+
 ```bash
 uvicorn main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`
+The API runs on http://localhost:8000 and the interactive docs are at http://localhost:8000/docs.
 
-### Frontend Setup
+### Frontend
 
-1. **Navigate to frontend directory**
 ```bash
-cd ../frontend
-```
-
-2. **Install dependencies**
-```bash
+cd frontend
 npm install
 ```
 
-3. **Environment configuration**
-Create `.env.local`:
+Create `frontend/.env.local`:
+
 ```env
 VITE_API_URL=http://localhost:8000
 ```
 
-4. **Run the frontend**
 ```bash
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`
+The app runs on http://localhost:5173.
 
-## 🧪 Testing
+## API
 
-### Backend Tests
-```bash
-cd backend
-python -m pytest
-# Or run specific tests
-python test_integration_robustness.py
-python test_simple_integration.py
-```
+All routes except register, login and the health checks need a bearer token.
 
-### Frontend Tests
+| Method | Route | Purpose |
+|---|---|---|
+| POST | `/api/users/register` | Create an account |
+| POST | `/api/users/login` | Log in and get a token |
+| GET | `/api/users/me` | Current user |
+| PUT | `/api/users/me` | Update the current user |
+| POST | `/api/agent/query` | Run a search (`save_to_history` query param, default true) |
+| GET | `/api/agent/history` | Recent searches (`limit`, 1 to 50) |
+| POST | `/api/content/save` | Save a result |
+| GET | `/api/content/saved` | List saved results |
+| DELETE | `/api/content/delete?content_id=<id>` | Delete a saved result |
+| GET | `/`, `/health`, `/api/v1/health` | Health checks |
+
+## Tests
+
+The frontend has a Jest setup with one component test (`FloatingMenu`):
+
 ```bash
 cd frontend
 npm test
-# Run tests in watch mode
-npm test -- --watch
 ```
 
-## 🚀 Deployment
+The backend has a few integration scripts around reference/source handling (`backend/test_*.py`). They are meant to be run directly with `python`, for example `python test_simple_integration.py`, and they need a configured `.env`. They are not a pytest suite.
 
-### Backend Deployment (Render)
-1. Connect your GitHub repository to Render
-2. Configure build settings:
-   - Build Command: `pip install -r requirements.txt`
-   - Start Command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-3. Set environment variables in Render dashboard
-4. Deploy using the provided `render.yaml` configuration
+## Known limitations
 
-### Frontend Deployment (Vercel)
-1. Connect your GitHub repository to Vercel
-2. Set build settings:
-   - Framework Preset: Vite
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-3. Configure environment variables
-4. Deploy using the provided `vercel.json` configuration
+- The agent uses one fixed ADK session ID with an in-memory session service. That is fine for a single user, but two searches running at the same time would share state. Using a session per request is the first thing I would change.
+- The login token is stored in `localStorage`.
+- Test coverage is thin, especially on the frontend.
+- Answers come from Gemini plus web search results, so quality depends on what the search returns. The sources list is there so you can check them.
 
-Detailed deployment instructions are available in [DEPLOYMENT.md](DEPLOYMENT.md).
+## Author
 
-## 📊 AI Agent Architecture
-
-ArtiCube uses a sophisticated multi-agent system built on Google's Agent Development Kit:
-
-### Agent Flow
-1. **Finder Agent**: Searches for relevant information using Google Search API
-2. **Content Processor**: Extracts and validates content from search results
-3. **Organizer Agent**: Structures information into logical, readable sections
-4. **Formatter Agent**: Applies final formatting and ensures proper citations
-
-### Key Features
-- **Asynchronous Processing**: Non-blocking agent execution
-- **State Management**: Reliable session state across agent transitions
-- **Error Recovery**: Graceful handling of API failures and timeouts
-- **Source Validation**: Ensures all citations are accurate and accessible
-
-## 🔧 API Endpoints
-
-### Authentication
-- `POST /api/users/register` - User registration
-- `POST /api/users/login` - User login
-- `GET /api/users/me` - Get current user profile
-
-### Knowledge Retrieval
-- `POST /api/agent/query` - Query the AI agent for information
-- `GET /api/agent/history` - Get user's search history
-
-### Content Management
-- `POST /api/content/save` - Save content for later reference
-- `GET /api/content/saved` - Get user's saved content
-- `DELETE /api/content/{content_id}` - Delete saved content
-
-### Health Checks
-- `GET /health` - Basic health check
-- `GET /api/v1/health` - API version health check
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is proprietary software. All rights reserved.
-
-## 👨‍💻 Developer
-
-**Hitesh Sakamuri**
-- Full-stack development
-- AI agent architecture
-- System design and deployment
-
-## 🔗 Links
-
-- [Live Application](https://your-domain.com)
-- [API Documentation](https://your-api-domain.com/docs)
-- [Deployment Guide](DEPLOYMENT.md)
-
----
-
-Built with ❤️ using modern web technologies and AI-powered knowledge retrieval.
+Hitesh Sakamuri

@@ -1,54 +1,53 @@
-# React + TypeScript + Vite
+# ArtiCube frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19 + TypeScript app built with Vite. The main project README is [one level up](../README.md).
 
-Currently, two official plugins are available:
+## Run it
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Create `.env.local`:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```env
+VITE_API_URL=http://localhost:8000
 ```
+
+```bash
+npm run dev
+```
+
+The app runs on http://localhost:5173 and expects the backend to be running at the `VITE_API_URL` address.
+
+## Scripts
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Start the Vite dev server |
+| `npm run build` | Production build |
+| `npm run build:check` | Type-check, then build |
+| `npm run lint` | ESLint |
+| `npm test` | Jest |
+
+## Pages
+
+| Route | Page |
+|---|---|
+| `/` | Landing page |
+| `/login`, `/register` | Authentication |
+| `/app` | Home, with the search box and recent searches |
+| `/app/search` | Home with the search modal open |
+| `/app/saved` | Saved results |
+| `/app/account` | Account details and logout |
+
+Everything under `/app` sits behind a protected route that redirects to `/login` when there is no logged-in user.
+
+## Structure
+
+- `src/pages/` has one component per page.
+- `src/components/search/` has the search modal, the loading state and the results view.
+- `src/components/content/ViewContentModal.tsx` shows a saved result with its sources.
+- `src/store/slices/` has the Redux Toolkit slices for auth, search results, saved content, UI state and notifications.
+- `src/services/api.ts` is the Axios client and the API calls.
+- `src/utils/` has config and a few performance helpers (virtualized list, GPU-friendly rendering, monitoring).

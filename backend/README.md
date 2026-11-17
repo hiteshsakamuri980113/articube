@@ -1,84 +1,47 @@
-# ArtiCube Knowledge Retrieval System
+# ArtiCube backend
 
-ArtiCube is a knowledge retrieval system that uses advanced AI agents to search for accurate information and provide well-formatted responses with proper citations.
+FastAPI service for ArtiCube. It handles user accounts, runs the search agents, and stores search history and saved results in MongoDB. The main project README is [one level up](../README.md).
 
-## Environment Setup
-
-1. Create a `.env` file in the backend directory based on the provided `.env.example`
-2. Set up your API keys and configuration values in the `.env` file
-3. Never commit your actual API keys to the repository
+## Run it
 
 ```bash
-# Copy the example env file
-cp .env.example .env
-
-# Edit with your actual settings
-nano .env  # or use your preferred editor
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env            # then fill in the values
+uvicorn main:app --reload
 ```
 
-## Issue Resolution
+The API runs on http://localhost:8000 with interactive docs at `/docs`.
 
-The system had several issues that have been fixed:
+Settings are read from `.env` by `app/utils/config.py`. `MONGODB_URL`, `MONGODB_DB_NAME`, `SECRET_KEY` and `CORS_ORIGINS` are required. `GOOGLE_API_KEY` is needed for the search agent to work.
 
-1. **State Management**: Enhanced global state management to reliably track information across agents
-2. **Search Results**: Added direct search functionality to ensure search results are always available
-3. **Formatter Agent**: Fixed the formatter_agent to correctly invoke its processing tool
-4. **API Router Paths**: Corrected API router paths from `/apicontent` to `/api/content`
-5. **Error Handling**: Added comprehensive error handling and fallback options
+## Where things are
 
-## Running Tests
+| Path | What it does |
+|---|---|
+| `main.py` | App setup, CORS, routers, health checks, MongoDB connect and disconnect |
+| `app/agents/knowledge_agent.py` | The ADK agents and the `get_information()` function the route calls |
+| `app/api/routers/agent_router.py` | `POST /api/agent/query`, `GET /api/agent/history` |
+| `app/api/routers/user_router.py` | Register, login, get and update the current user |
+| `app/api/routers/content_router.py` | Save, list and delete saved results |
+| `app/auth/jwt.py` | Password hashing and token creation and verification |
+| `app/utils/json_helpers.py` | Cleans up and formats the sources list |
 
-There are several test scripts available:
+`app/agents/backup.py`, `app/api/routers/agent_router_new.py` and `app/utils/cp_backup.py` are older versions of the agent code that I kept around. They are not used by `main.py`.
 
-### 1. Test Agent Function Directly
+## How the agent flow works
 
-Tests the agent function without using the API:
+`knowledge_agent.py` has three Gemini 2.0 Flash agents. A coordinating agent calls `finder_agent` (Google Search) and then `organizer_agent` as tools, with a `get_fact_sources` function in between that reads the search results out of the session state. The organized text and the source list are returned to the route. `AGENT_ARCHITECTURE.md` in this folder describes an earlier four-agent design, so trust the code over that document.
+
+The agent keeps its state in an in-memory ADK session with a fixed session ID, so it only handles one search at a time properly.
+
+## Tests
+
+The `test_*.py` files are standalone scripts, not a pytest suite. Run one directly:
 
 ```bash
-python test_api_call.py
+python test_simple_integration.py
 ```
 
-### 2. Complete End-to-End Test
-
-Tests the entire system including API server, user registration, authentication, and API calls:
-
-```bash
-python test_complete.py
-```
-
-### 3. Start the API Server
-
-To run the API server manually:
-
-```bash
-python main.py
-```
-
-## Troubleshooting
-
-If you encounter empty global state values:
-
-1. Make sure you're using `info_agent_fixed.py` implementation
-2. Check that the content router path in `main.py` is `/api/content`
-3. Try running the `test_complete.py` script to verify all components
-
-## State Dictionary Structure
-
-The global state dictionary contains:
-
-- `topic`: The user's query topic
-- `content`: Processed content from search results
-- `formatted_response`: The final formatted response
-- `extracted_info`: Additional extracted information
-- `search_results`: Raw search results
-- `sources`: List of source objects with titles, links and citations
-
-## API Endpoints
-
-- **Agent API**: `/api/agent/query` - Get information on a topic
-- **Content API**: `/api/content` - Manage saved content
-- **User API**: `/api/users` - User management endpoints
-
-## Contributors
-
-- Hitesh Sakamuri
+They call the agent and need a working `.env`.
