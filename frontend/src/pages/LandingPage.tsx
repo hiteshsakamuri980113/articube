@@ -165,7 +165,7 @@ const LandingPage = () => {
           </div>
           <div className="flex items-center h-full gap-4 navbar-buttons">
             <a
-              href="https://github.com/hiteshsakamuri/articube"
+              href="https://github.com/hiteshsakamuri980113/articube"
               target="_blank"
               rel="noopener noreferrer"
               className="nav-button text-white flex items-center justify-center gap-2 text-sm"
@@ -205,7 +205,7 @@ const LandingPage = () => {
                     Try the Demo
                   </Link>
                   <a
-                    href="https://github.com/hiteshsakamuri/articube"
+                    href="https://github.com/hiteshsakamuri980113/articube"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="simple-button secondary-button rounded-lg flex items-center justify-center gap-2 text-sm"
