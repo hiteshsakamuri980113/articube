@@ -29,7 +29,7 @@ The write-up and the formatted sources are returned from `POST /api/agent/query`
 
 **Frontend:** React 19, TypeScript, Vite, Redux Toolkit, React Router 7, Tailwind CSS, Axios, Jest and Testing Library
 
-**Hosting:** Render for the API, Vercel for the frontend (see [DEPLOYMENT.md](DEPLOYMENT.md))
+**Hosting:** Render for the API, Vercel for the frontend (see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md))
 
 ## Project layout
 
